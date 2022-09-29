@@ -1,5 +1,6 @@
 # Hacker News API Command line client
 ### FIT CTU 2022, BIE-OOP, Nick Matsnev
+## 0. I am sorry I did not check scrupulously and did not fork from templatet, my bad:( I hope it is ok tho
 ## 1. Plan
 ### 1.1 Introduction
  Hello, my name is Nick Matsnev and I attempt to do OOP project in Scala here. 
