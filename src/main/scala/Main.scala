@@ -1,4 +1,5 @@
 import CommandParser.{defaultHelp, splitCommand}
+import api.ApiCallsImplementation
 
 object Main {
   // process args
@@ -20,6 +21,7 @@ object Main {
       else
         println("command type and then its help section with match pattern")
     }
+    ApiCallsImplementation.getNewStories() // it works! if course it is just terrible way to test it but still
 
   }
 
