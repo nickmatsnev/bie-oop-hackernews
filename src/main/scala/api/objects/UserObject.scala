@@ -7,8 +7,8 @@ import upickle.default.{ReadWriter => RW, macroRW}
 //karma	The user's karma.
 //about	The user's optional self-description. HTML.
 //submitted	List of the user's stories, polls and comments.
-case class UserObject(userid : Int,
-                      created : String,
+case class UserObject(userid : String,
+                      created : Long,
                       karma : Int,
                       aboutHTML : Int,
                       submitted : Array[Int]){

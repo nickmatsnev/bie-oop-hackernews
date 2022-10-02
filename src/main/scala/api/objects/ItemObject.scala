@@ -21,6 +21,7 @@ import upickle.default.{ReadWriter => RW, macroRW}
 case class ItemObject(id : Int,
                       deleted : Boolean,
                       itemType : String,
+                      by : String,
                       htmlText : String,
                       dead : Boolean,
                       parent : Int,
