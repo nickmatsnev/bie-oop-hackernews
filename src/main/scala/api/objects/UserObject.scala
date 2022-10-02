@@ -1,5 +1,6 @@
 package api.objects
 
+import upickle.default.{ReadWriter => RW, macroRW}
 //Field	Description
 //id	The user's unique username. Case-sensitive. Required.
 //created	Creation date of the user, in Unix Time.
@@ -10,4 +11,8 @@ case class UserObject(userid : Int,
                       created : String,
                       karma : Int,
                       aboutHTML : Int,
-                      submitted : Array[Int]){}
+                      submitted : Array[Int]){
+}
+object UserObject{
+  implicit val rw: RW[UserObject] = macroRW
+}

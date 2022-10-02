@@ -1,4 +1,7 @@
 package api.objects
+
+import upickle.default.{ReadWriter => RW, macroRW}
+
 //Field	Description
 //id	The item's unique id.
 //deleted	true if the item is deleted.
@@ -27,4 +30,9 @@ case class ItemObject(id : Int,
                       score : Int,
                       title : String,
                       parts : Array[Int],
-                      descendants: Int) {}
+                      descendants: Int) {
+
+}
+object ItemObject{
+  implicit val rw: RW[ItemObject] = macroRW
+}

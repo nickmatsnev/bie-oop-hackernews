@@ -6,4 +6,4 @@ lazy val root = (project in file("."))
   .settings(
     name := "hackernews"
   )
-libraryDependencies += "com.lihaoyi" %% "upickle" % "1.6.8"
+libraryDependencies += "com.lihaoyi" %% "upickle" % "1.6.0"
