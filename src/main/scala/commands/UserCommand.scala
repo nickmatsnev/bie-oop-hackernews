@@ -12,4 +12,6 @@ object UserCommand {
     val user = userObj.get
     View.viewUser(user)
   }
+
+  def showHelp() : Unit = println("Help about users will be here.\n")
 }

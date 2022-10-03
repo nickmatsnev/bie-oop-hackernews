@@ -14,4 +14,5 @@ object ItemCommand{
     //CommentCommand.execute(itemObj)
   }
 
+  def showHelp() : Unit = println("Help about items will be here.\n")
 }

@@ -17,6 +17,7 @@ object StoriesCommand {
     for (storyId <- storiesIds) {
       ItemCommand.execute(storyId)
     }
-
   }
+
+  def showHelp() : Unit = println("Help about stories will be here.\n")
 }
