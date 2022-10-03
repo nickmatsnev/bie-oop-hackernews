@@ -8,9 +8,9 @@ class ReaderImplementation extends ApiReader
   // and it should be class too
   // sealed preferably
 
-  override def toUser(user: String): UserObject = read[UserObject](user)
+  override def toUser(user: String): Option[UserObject] = Option(read[UserObject](user))
 
-  override def toItem(item: String): ItemObject = read[ItemObject](item)
+  override def toItem(item: String): Option[ItemObject] = Option(read[ItemObject](item))
 
   override def toStories(stories: String): Array[Int] = read[Array[Int]](stories)
 }

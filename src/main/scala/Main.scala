@@ -26,7 +26,7 @@ object Main {
 
     UserCommand.execute("justin")
     ItemCommand.execute(8863)
-    StoriesCommand.execute("topstories")
+    StoriesCommand.execute("beststories")
   }
 
 }

@@ -4,8 +4,12 @@ import api.apicalls.ApiService
 import views.View
 
 object UserCommand {
-  def execute(userId: String): Unit = {
-    val userObj = new ApiService().getUser(userId)
-    View.viewUser(userObj)
+  def execute(id: String): Unit = {
+    val userObj = new ApiService().getUser(id)
+    if(userObj.isEmpty){
+      throw new NoSuchElementException("User " + id + " doesn't exist")
+    }
+    val user = userObj.get
+    View.viewUser(user)
   }
 }
