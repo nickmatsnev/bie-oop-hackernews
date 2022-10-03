@@ -29,7 +29,7 @@ object ViewBuilder {
 
   def buildComment(itemObj : ItemObject) : String = {
     var commentString = "Comment by " + itemObj.by + ":\n"
-    commentString += itemObj.htmlText += "\n"
+    commentString += itemObj.htmlText + "\n"
     commentString += itemObj.kids.length + " comments below\n"
     commentString
   }
@@ -49,7 +49,7 @@ object ViewBuilder {
   }
 
   def buildUser(userObj : UserObject) : String = {
-    var userString = "name: " + userObj.userid + "\n"
+    var userString = "name: " + userObj.id + "\n"
     userString += "created: " + buildTime(userObj.created) + "\n"
     userString += "karma: " + userObj.karma + "\n"
     userString += "submitted items count: " + userObj.submitted.length + "\n"
@@ -68,20 +68,13 @@ object ViewBuilder {
   }
 
   def buildMonth(month : Int) : String = {
-    var monthString = ""
-    Month.values.foreach
-    {
-      case d if d.id == month  =>
-        monthString = d.toString
-      case _ => "Month like this does not exist."
-    }
-    monthString
+    Month.apply(month)
   }
 
   def buildTime(seconds : Long): String ={
     val dateTime = TimeBuilder.getTime(seconds)
     val weekDay = TimeBuilder.getWeekDay(dateTime)
-    dateTime.toString + ", " + weekDay
+    dateTime.toString + ", " + buildWeekDay(weekDay)
   }
 }
 

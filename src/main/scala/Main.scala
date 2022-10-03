@@ -1,5 +1,6 @@
 import CommandParser.{defaultHelp, splitCommand}
 import api.apicalls.ApiCallsImplementation
+import commands.stories.UserCommand
 
 object Main {
   // process args
@@ -21,10 +22,9 @@ object Main {
       else
         println("command type and then its help section with match pattern")
     }
-    val apiCalls = new ApiCallsImplementation()
-    val itemId = apiCalls.getMaxItem // it works! if course it is just terrible way to test it but still
-    val text = apiCalls.getItem(itemId)
-    print(text)
+
+
+    UserCommand.execute("justin")
   }
 
 }

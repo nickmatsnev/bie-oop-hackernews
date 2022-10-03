@@ -8,7 +8,7 @@ class ApiCallsImplementation extends ApiCalls {
   private def get(url: String): String = {
     val source = Source.fromURL(url)
     val data = source.mkString
-    print(data)
+
     source.close()
     data
   }

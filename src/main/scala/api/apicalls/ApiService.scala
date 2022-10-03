@@ -3,7 +3,7 @@ package api.apicalls
 import api.objects.{ItemObject, UserObject}
 import api.reader.ApiReader
 
-class APIService extends ApiCalls {
+class ApiService extends ApiCalls {
   override def getUser(userId: String): UserObject = {
     val user = ApiCalls.getUser(userId)
     val userObj = ApiReader.toUser(user)

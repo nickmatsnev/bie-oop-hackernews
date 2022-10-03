@@ -1,5 +1,5 @@
 package views.html
 
-class Presenter {
-
+object Presenter {
+  def showView(view : String): Unit = println(view)
 }
