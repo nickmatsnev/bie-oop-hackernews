@@ -1,6 +1,7 @@
 package api.objects
 
-import upickle.default.{ReadWriter => RW, macroRW}
+import upickle.default.{macroRW, ReadWriter => RW}
+import upickle.implicits.key
 
 //Field	Description
 //id	The item's unique id.
@@ -19,18 +20,19 @@ import upickle.default.{ReadWriter => RW, macroRW}
 //parts	A list of related pollopts, in display order.
 //descendants	In the case of stories or polls, the total comment count.
 case class ItemObject(id : Int,
-                      deleted : Boolean,
-                      itemType : String,
+                      deleted : Boolean = false,
+                      @key("type") itemType : String,
                       by : String,
-                      htmlText : String,
-                      dead : Boolean,
-                      parent : Int,
-                      poll : String,
+                      time : Long,
+                      text : String,
+                      dead : Boolean = false,
+                      parent : Int = -1,
+                      poll : Int = -1,
                       kids : Array[Int],
                       url : String,
                       score : Int,
                       title : String,
-                      parts : Array[Int],
+                      parts : Array[Int] = Array(),
                       descendants: Int) {
 
 }

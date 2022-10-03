@@ -3,7 +3,7 @@ package api.apicalls
 trait ApiCalls {
   def getUser(userId: String): Any
 
-  def getItem(itemId: String): Any
+  def getItem(itemId: Int): Any
 
   def getTopStories: Any
 
@@ -25,7 +25,7 @@ object ApiCalls extends ApiCalls {
 
   override def getUser(userId: String): String = ApiCaller.getUser(userId)
 
-  override def getItem(itemId: String): String = ApiCaller.getItem(itemId)
+  override def getItem(itemId: Int): String = ApiCaller.getItem(itemId)
 
   override def getTopStories: String = ApiCaller.getTopStories
 

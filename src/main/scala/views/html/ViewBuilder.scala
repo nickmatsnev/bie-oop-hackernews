@@ -21,15 +21,16 @@ object ViewBuilder {
   def buildUserView(userObj : UserObject) : String = buildUser(userObj)
 
   def buildStory(itemObj : ItemObject) : String = {
-    var storyString = itemObj.title + "(" + itemObj.url + ")\n"
+    var storyString = itemObj.title + " (" + itemObj.url + ")\n"
     storyString += itemObj.score + " points by " + itemObj.by
-    storyString += " | " + itemObj.kids.length + " comments\n"
+    storyString +=  " at " + buildTime(itemObj.time) + " "
+      storyString += " | " + itemObj.kids.length + " comments\n"
     storyString
   }
 
   def buildComment(itemObj : ItemObject) : String = {
     var commentString = "Comment by " + itemObj.by + ":\n"
-    commentString += itemObj.htmlText + "\n"
+    commentString += itemObj.text + "\n"
     commentString += itemObj.kids.length + " comments below\n"
     commentString
   }
@@ -44,7 +45,7 @@ object ViewBuilder {
 
   def buildPollOpt(itemObj : ItemObject) : String = {
     var polloptString = itemObj.score + " points by " + itemObj.by + "\n"
-    polloptString += itemObj.htmlText + "\n"
+    polloptString += itemObj.text + "\n"
     polloptString
   }
 
@@ -52,7 +53,10 @@ object ViewBuilder {
     var userString = "name: " + userObj.id + "\n"
     userString += "created: " + buildTime(userObj.created) + "\n"
     userString += "karma: " + userObj.karma + "\n"
-    userString += "submitted items count: " + userObj.submitted.length + "\n"
+    userString += "comments spawned" +
+      "" +
+      "" +
+      ": " + userObj.submitted.length + "\n"
     userString
   }
 

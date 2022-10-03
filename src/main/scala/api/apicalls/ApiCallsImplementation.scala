@@ -15,7 +15,7 @@ class ApiCallsImplementation extends ApiCalls {
 
   override def getUser(userId: String): String = get(ApiUrl + "user/" + userId + ".json")
 
-  override def getItem(itemId: String): String = get(ApiUrl + "item/" + itemId + ".json")
+  override def getItem(itemId: Int): String = get(ApiUrl + "item/" + itemId + ".json")
 
   override def getTopStories: String = get(ApiUrl + "topstories.json")
 

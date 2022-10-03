@@ -10,7 +10,7 @@ class ApiService extends ApiCalls {
     userObj
   }
 
-  override def getItem(itemId: String): ItemObject = {
+  override def getItem(itemId: Int): ItemObject = {
     val item = ApiCalls.getItem(itemId)
     val itemObj = ApiReader.toItem(item)
     itemObj
