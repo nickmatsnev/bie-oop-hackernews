@@ -21,19 +21,19 @@ import upickle.implicits.key
 //descendants	In the case of stories or polls, the total comment count.
 case class ItemObject(id : Int,
                       deleted : Boolean = false,
-                      @key("type") itemType : String,
-                      by : String,
-                      time : Long,
-                      text : String,
+                      @key("type") itemType : String = "Unknown type",
+                      by : String = "Unknown Author",
+                      time : Long = 0,
+                      text : String = "No text",
                       dead : Boolean = false,
                       parent : Int = -1,
                       poll : Int = -1,
-                      kids : Array[Int],
-                      url : String,
-                      score : Int,
-                      title : String,
+                      kids : Array[Int] = Array(),
+                      url : String = "No url",
+                      score : Int = -1,
+                      title : String = "No title",
                       parts : Array[Int] = Array(),
-                      descendants: Int) {
+                      descendants: Int = -1) {
 
 }
 object ItemObject{

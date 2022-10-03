@@ -1,6 +1,6 @@
 import CommandParser.{defaultHelp, splitCommand}
 import api.apicalls.ApiCallsImplementation
-import commands.stories.{StoryCommand, UserCommand}
+import commands.stories.{ItemCommand, UserCommand}
 
 object Main {
   // process args
@@ -25,7 +25,7 @@ object Main {
 
 
     UserCommand.execute("justin")
-    StoryCommand.execute(9129911)
+    ItemCommand.execute(160705)
   }
 
 }

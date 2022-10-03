@@ -1,11 +1,11 @@
 package commands.stories
 
 import api.apicalls.ApiService
-import views.html.View
+import views.View
 
-object StoryCommand {
+object ItemCommand {
   def execute(itemId : Int): Unit = {
     val itemObj = new ApiService().getItem(itemId)
-    View.viewStory(itemObj)
+    View.viewItem(itemObj)
   }
 }

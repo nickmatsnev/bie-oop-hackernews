@@ -1,7 +1,7 @@
 package commands.stories
 
 import api.apicalls.ApiService
-import views.html.View
+import views.View
 
 object UserCommand {
   def execute(userId : String): Unit = {
