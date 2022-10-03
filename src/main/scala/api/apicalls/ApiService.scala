@@ -4,29 +4,22 @@ import api.objects.{ItemObject, UserObject}
 import api.reader.ApiReader
 
 class ApiService extends ApiCalls {
-  override def getUser(userId: String): UserObject = {
-    val user = ApiCalls.getUser(userId)
-    val userObj = ApiReader.toUser(user)
-    userObj
-  }
 
-  override def getItem(itemId: Int): ItemObject = {
-    val item = ApiCalls.getItem(itemId)
-    val itemObj = ApiReader.toItem(item)
-    itemObj
-  }
+  override def getUser(userId: String): UserObject = ApiReader.toUser(ApiCalls.getUser(userId))
 
-  override def getTopStories: String = ???
+  override def getItem(itemId: Int): ItemObject = ApiReader.toItem(ApiCalls.getItem(itemId))
 
-  override def getBestStories: String = ???
+  override def getTopStories: Array[Int] = ApiReader.toStories(ApiCalls.getTopStories)
 
-  override def getNewStories: String = ???
+  override def getBestStories: Array[Int] = ApiReader.toStories(ApiCalls.getBestStories)
 
-  override def getAskStories: String = ???
+  override def getNewStories: Array[Int] = ApiReader.toStories(ApiCalls.getNewStories)
 
-  override def getShowStories: String = ???
+  override def getAskStories: Array[Int] = ApiReader.toStories(ApiCalls.getAskStories)
 
-  override def getJobStories: String = ???
+  override def getShowStories: Array[Int] = ApiReader.toStories(ApiCalls.getShowStories)
 
-  override def getMaxItem: String = ???
+  override def getJobStories: Array[Int] = ApiReader.toStories(ApiCalls.getJobStories)
+
+  override def getMaxItem: ItemObject = ApiReader.toItem(ApiCalls.getMaxItem)
 }
