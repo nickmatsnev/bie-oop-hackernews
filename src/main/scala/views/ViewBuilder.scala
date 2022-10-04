@@ -52,7 +52,7 @@ object ViewBuilder {
   }
 
   def buildUser(userObj: UserObject): String = {
-    var userString = "name: " + bold(userObj.id.toString) + "\n"
+    var userString = "name: " + bold(userObj.id) + "\n"
     userString += "created at: " + buildTime(userObj.created) + "\n"
     userString += "karma: " + bold(userObj.karma.toString) + "\n"
     userString += "comments amd stories spawned" +
@@ -78,5 +78,18 @@ object ViewBuilder {
     val dateTime = TimeBuilder.getTime(seconds)
     val weekDay = TimeBuilder.getWeekDay(dateTime)
     dateTime.toString + ", " + buildWeekDay(weekDay)
+  }
+
+  def buildHelp(commandType : String): String ={
+    var help = "Help for " + commandType + ":\n"
+    // match for diff command
+    commandType match {
+      case "comment" => help += "Comment command shows all comments to the item recursively.\n"
+      case "item" => help += "Item is called and therefore it prints basic info about unitary item.\n"
+      case "user" => help += "Shows user's info:\nname;\ndate of creation;\ncarma;\nposted stuff in a human quantity.\n"
+      case "stories" => help += "Summons list of best, new, top, job, ask or show stories.\n"
+      case _ => help = "This command type is unknown for me.\n"
+    }
+    help
   }
 }

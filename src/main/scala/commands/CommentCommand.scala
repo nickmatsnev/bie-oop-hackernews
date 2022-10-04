@@ -1,13 +1,15 @@
 package commands
 
-import api.objects.ItemObject
+import api.apicalls.ApiService
+import views.View
 
-object CommentCommand extends Command {
-  def execute(itemObj: ItemObject): Unit = {
-    val commentsIds = itemObj.kids
-    for (commentId <- commentsIds) {
-      ItemCommand.execute(commentId)
-    }
+object CommentCommand extends Command{
+  override def execute(id: Any): Unit = {
+    val idInt = id.asInstanceOf[Int]
+    val itemObj = new ApiService().getItem(idInt)
+    val item = itemObj.get
+    val commentsIds = item.kids
+    for (commentId <- commentsIds) ItemCommand.execute(commentId)
   }
-  def showHelp() : Unit = println("Help about comments will be here.\n")
+  override def showHelp() : Unit = View.viewHelp("comment")
 }

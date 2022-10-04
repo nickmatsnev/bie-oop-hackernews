@@ -3,15 +3,16 @@ package commands
 import api.apicalls.ApiService
 import views.View
 
-object UserCommand {
-  def execute(id: String): Unit = {
-    val userObj = new ApiService().getUser(id)
+object UserCommand extends Command {
+  override def execute(id: Any): Unit = {
+    val idStr = id.toString
+    val userObj = new ApiService().getUser(idStr)
     if(userObj.isEmpty){
-      throw new NoSuchElementException("User " + id + " doesn't exist")
+      throw new NoSuchElementException("User " + idStr + " doesn't exist")
     }
     val user = userObj.get
     View.viewUser(user)
   }
 
-  def showHelp() : Unit = println("Help about users will be here.\n")
+  override def showHelp() : Unit = View.viewHelp("user")
 }

@@ -3,10 +3,12 @@ package commands
 import api.apicalls.ApiService
 import views.View
 
-object StoriesCommand {
-  def execute(storyType : String) : Unit = {
+object StoriesCommand extends Command{
+  def execute(id : Any) : Unit = {
+    val storyType = id.toString
+    val storyTypeStr = storyType.toString
     var storiesIds = new ApiService().getTopStories // case _
-    storyType match {
+    storyTypeStr match {
       case "topstories" => storiesIds = new ApiService().getTopStories
       case "newstories" => storiesIds = new ApiService().getNewStories
       case "beststories" => storiesIds = new ApiService().getBestStories
@@ -19,5 +21,5 @@ object StoriesCommand {
     }
   }
 
-  def showHelp() : Unit = println("Help about stories will be here.\n")
+  override def showHelp() : Unit = View.viewHelp("stories")
 }
