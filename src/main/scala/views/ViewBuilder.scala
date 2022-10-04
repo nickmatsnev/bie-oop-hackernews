@@ -87,9 +87,11 @@ object ViewBuilder {
       case "comment" => help += "Comment command shows all comments to the item recursively.\n"
       case "item" => help += "Item is called and therefore it prints basic info about unitary item.\n"
       case "user" => help += "Shows user's info:\nname;\ndate of creation;\ncarma;\nposted stuff in a human quantity.\n"
-      case "stories" => help += "Summons list of best, new, top, job, ask or show stories.\n"
+      case "newstories" | "beststories" | "showstories" | "askstories" | "jobstories" | "topstories" =>
+        help += "Summons list of best, new, top, job, ask or show stories.\n"
       case _ => help = "This command type is unknown for me.\n"
     }
+    help += "End of the helping section.\n\n"
     help
   }
 }

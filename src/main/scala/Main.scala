@@ -1,6 +1,7 @@
 import CommandParser.{defaultHelp, splitCommand}
 import api.apicalls.ApiCallsImplementation
 import commands.{ItemCommand, StoriesCommand, UserCommand}
+import views.View
 
 object Main {
   // process args
@@ -20,13 +21,25 @@ object Main {
       if (args.length == 1)
         print(defaultHelp())
       else
-        println("command type and then its help section with match pattern")
+        View.viewHelp(commandName)
     }
+    val cf = new CommandFactory
+    cf.create(commandName)
 
+    // observable tasks and not all of em i have written in the note book:
+    // 1. add flags for help so it'll be shown from views done
+    // 2. cache
+    // 3. options
+    // 4. lazy fetching
+    // 5. exceptions
+    // 6. look for redundancies
+    // 7. comments
+    // 8. tests
+    // 9. more tests
 
-    UserCommand.execute("justin")
-    ItemCommand.execute(8863)
-    StoriesCommand.execute("beststories")
+    //UserCommand.execute("justin")
+    //ItemCommand.execute(8863)
+    //StoriesCommand.execute("beststories")
   }
 
 }
