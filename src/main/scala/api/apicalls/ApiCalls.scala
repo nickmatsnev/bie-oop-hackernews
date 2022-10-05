@@ -18,6 +18,8 @@ trait ApiCalls {
   def getJobStories: Any
 
   def getMaxItem: Any
+
+  def getUpdates: Any
 }
 
 object ApiCalls extends ApiCalls {
@@ -40,4 +42,6 @@ object ApiCalls extends ApiCalls {
   override def getJobStories: String = ApiCaller.getJobStories
 
   override def getMaxItem: String = ApiCaller.getMaxItem
+
+  override def getUpdates: String = ApiCaller.getUpdates
 }

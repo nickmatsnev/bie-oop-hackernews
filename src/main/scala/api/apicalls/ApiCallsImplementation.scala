@@ -30,4 +30,6 @@ class ApiCallsImplementation extends ApiCalls {
   override def getJobStories: String = get(ApiUrl + "jobstories.json")
 
   override def getMaxItem: String = get(ApiUrl + "maxitem.json")
+
+  override def getUpdates: String = get(ApiUrl + "updates.json")
 }

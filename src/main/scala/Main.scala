@@ -27,15 +27,15 @@ object Main {
     cf.create(commandName)
 
     // observable tasks and not all of em i have written in the note book:
-    // 1. add flags for help so it'll be shown from views done
-    // 2. cache
-    // 3. options
-    // 4. lazy fetching
-    // 5. exceptions
-    // 6. look for redundancies
-    // 7. comments
-    // 8. tests
-    // 9. more tests
+    // 1. add flags for help so it'll be shown from views. done
+    // 2. cache.
+    // 3. options.
+    // 4. lazy fetching.
+    // 5. exceptions.
+    // 6. look for redundancies.
+    // 7. comments.
+    // 8. tests.
+    // 9. more tests.
 
     //UserCommand.execute("justin")
     //ItemCommand.execute(8863)

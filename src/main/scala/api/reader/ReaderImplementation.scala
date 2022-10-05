@@ -1,5 +1,5 @@
 package api.reader
-import api.objects.{ItemObject, UserObject}
+import api.objects.{ItemObject, UpdatesObject, UserObject}
 import upickle.default.read
 
 class ReaderImplementation extends ApiReader
@@ -13,4 +13,6 @@ class ReaderImplementation extends ApiReader
   override def toItem(item: String): Option[ItemObject] = Option(read[ItemObject](item))
 
   override def toStories(stories: String): Array[Int] = read[Array[Int]](stories)
+
+  override def toUpdates(updates: String): UpdatesObject = read[UpdatesObject](updates)
 }
