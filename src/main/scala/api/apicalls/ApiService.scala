@@ -6,20 +6,30 @@ import cache.Cache
 
 class ApiService extends ApiCalls {
   private val cache = new Cache()
+
   override def getUser(userId: String): Option[UserObject] = {
     val cachedUser = cache.uploadUser(userId)
-    if( cachedUser.id == "No name")
+    if( cachedUser.created == 0 && !cache.exists(userId)) {
+      val userObj = ApiReader.toUser(ApiCalls.getUser(userId))
+      if(userObj.isEmpty) throw new NoSuchElementException("User " + userId + " doesn't exist")
+      val user = userObj.get
+      cache.saveUser(user)
       ApiReader.toUser(ApiCalls.getUser(userId))
-    else
+    } else
       Option(cachedUser)
   }
 
   override def getItem(itemId: Int): Option[ItemObject] = {
     val cachedItem = cache.uploadItem(itemId)
-    if (cachedItem.id.toString == "No name")
+    if (cachedItem.time == 0 && !cache.exists(itemId)) {
+      val itemObj = ApiReader.toItem(ApiCalls.getItem(itemId))
+      if(itemObj.isEmpty) throw new NoSuchElementException("Item " + itemId + " doesn't exist")
+      val item = itemObj.get
+      cache.saveItem(item)
       ApiReader.toItem(ApiCalls.getItem(itemId))
-    else
+    } else {
       Option(cachedItem)
+    }
   }
 
   override def getTopStories: Array[Int] = ApiReader.toStories(ApiCalls.getTopStories)

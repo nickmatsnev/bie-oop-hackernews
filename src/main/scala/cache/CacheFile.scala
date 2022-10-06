@@ -2,7 +2,6 @@ package cache
 import api.objects.{ItemObject, UserObject}
 import java.io.{File, FileWriter}
 import scala.io.Source
-import scala.util.control.Breaks.break
 /*
 * CacheObject ==
 * ---
@@ -11,25 +10,34 @@ import scala.util.control.Breaks.break
 * ---
 * */
 class CacheFile {
-  private val cachePathItems = "cache/items/items"
-  private val cachePathUsers = "cache/users/users"
+  private val cachePathItems = "src/main/scala/cache/items/items"
+  private val cachePathUsers = "src/main/scala/cache/users/users"
+
 
   private def toLines(text: String): Array[String] = text.split("\n")
 
-  private def getLines(itemType: String): Array[String] = {
-    val path = if (itemType == "user") cachePathUsers else cachePathItems
+  // text should be (id,id,id,...,id) ; we take first&last elems from string as they're () and then split and convert
+  private def toIntArray(text: String): Array[Int] = text.dropRight(1).split(",").map(_.toInt)
+
+  private def getFileAsString(path: String): String = {
     val source = Source.fromFile(path)
-    val lines = source.getLines().toArray
+    val lines = source.mkString
     source.close()
     lines
   }
 
+  private def getLines(itemType: String): Array[String] = {
+    val path = if (itemType == "user") cachePathUsers else cachePathItems
+    getFileAsString(path).split('\n')
+  }
+
   private def existException(cacheFile: File): Unit = {
     if(!cacheFile.exists()) {
+      throw new Exception("suka " + cacheFile.getAbsolutePath + " pidor " + cacheFile.getCanonicalPath)
       cacheFile.createNewFile()
-      throw new Exception("Cache file does not exist")
     }
   }
+
   def toCacheObject(itemObj : ItemObject): String = {
     var cacheObject = "---\n"
     cacheObject += itemObj.id.toString + "\n"
@@ -41,24 +49,22 @@ class CacheFile {
     cacheObject += "dead " + itemObj.dead.toString + "\n"
     cacheObject += "parent " + itemObj.parent.toString + "\n"
     cacheObject += "poll " + itemObj.poll.toString + "\n"
-    cacheObject += "kids " + itemObj.kids.mkString("Array(", ", ", ")") + "\n"
+    cacheObject += "kids " + itemObj.kids.mkString("Array(", ",", ")") + "\n"
     cacheObject += "url " + itemObj.url + "\n"
     cacheObject += "score " + itemObj.score.toString + "\n"
     cacheObject += "title " + itemObj.title + "\n"
-    cacheObject += "parts " + itemObj.parts.mkString("Array(", ", ", ")") + "\n"
+    cacheObject += "parts " + itemObj.parts.mkString("Array(", ",", ")") + "\n"
     cacheObject += "descendants " + itemObj.descendants.toString + "\n"
-    cacheObject += "---\n"
     cacheObject
   }
 
   def toCacheObject(userObj : UserObject): String = {
     var cacheObject = "---\n"
-    cacheObject += " " + userObj.id + "\n"
+    cacheObject += userObj.id + "\n"
     cacheObject += "created " + userObj.created.toString + "\n"
     cacheObject += "karma " + userObj.karma.toString + "\n"
     cacheObject += "about " + userObj.about + "\n"
-    cacheObject += "submitted " + userObj.submitted.mkString("Array(", ", ", ")") + "\n"
-    cacheObject += "---\n"
+    cacheObject += "submitted " + userObj.submitted.mkString("Array(", ",", ")") + "\n"
     cacheObject
   }
 
@@ -82,7 +88,7 @@ class CacheFile {
 
     var lines = toLines(cacheObj).tail
 
-    id = lines.head.asInstanceOf[Int]
+    id = lines.head.toInt
     lines = lines.drop(1)
 
     if (lines.head.startsWith("by")) {
@@ -118,7 +124,8 @@ class CacheFile {
       lines = lines.drop(1)
     }
     if (lines.head.startsWith("kids")) {
-      kids = lines.head.drop(5).to(Array[Int])
+      val stringKids = lines.head.drop(5)
+      kids = toIntArray(stringKids)
       lines = lines.drop(1)
     }
     if (lines.head.startsWith("url")) {
@@ -134,7 +141,8 @@ class CacheFile {
       lines = lines.drop(1)
     }
     if (lines.head.startsWith("parts")) {
-      parts = lines.head.drop(6).to(Array[Int])
+      val stringParts = lines.head.drop(6)
+      parts = toIntArray(stringParts)
       lines = lines.drop(1)
     }
     if (lines.head.startsWith("descendants")) {
@@ -172,19 +180,20 @@ class CacheFile {
     lines = lines.drop(1)
 
     if (lines.head.startsWith("created")){
-      created = lines.head.take(8).toLong
+      created = lines.head.drop(8).toLong
       lines = lines.drop(1)
     }
     if (lines.head.startsWith("karma")){
-      karma = lines.head.take(6).toInt
+      karma = lines.head.drop(6).toInt
       lines = lines.drop(1)
     }
     if (lines.head.startsWith("about")){
-      about = lines.head.take(6)
+      about = lines.head.drop(6)
       lines = lines.drop(1)
     }
     if (lines.head.startsWith("submitted")){
-      submitted = lines.head.take(10).to(Array[Int])
+      val stringSubmitted = lines.head.drop(16)
+      submitted = toIntArray(stringSubmitted)
       lines = lines.drop(1)
     }
     UserObject(
@@ -196,32 +205,42 @@ class CacheFile {
     )
   }
 
-
   def getCacheObject(itemId : String, itemType: String) : String = {
-    var cacheObj = "---\n" + itemId + "\n"
+    var cacheObj = itemId + "\n"
     itemType match {
-      case "user" => getCacheObj(cachePathUsers, 4)
-      case _ => getCacheObj(cachePathItems, 15)
+      case "user" => getCacheObj(cachePathUsers, 5)
+      case _ => getCacheObj(cachePathItems, 16)
     }
-    cacheObj += "---\n"
     def getCacheObj(path: String, counterLimit: Int): Unit = {
       val cacheFile = new File(path)
       existException(cacheFile)
-      val cacheLines = getLines("item")
+      val cacheLine = getLines(itemType)
       var found: Boolean = false
       var counter: Int = 0
-      for (line <- cacheLines){
-        if (counter > counterLimit || line.startsWith("---")) break()
-        if (found) {
-          counter += 1
-          cacheObj += line
+      def gettingLines(): Unit ={
+        for (line <- cacheLine){
+          if (line.startsWith(itemId)) found = true
+          if (counter > counterLimit || (line.startsWith("---") && counter == counterLimit)) return
+          if (found) {
+            counter += 1
+            cacheObj += line + "\n"
+          }
         }
-        if (line.startsWith(itemId)) found = true
       }
+      gettingLines
     }
     cacheObj
   }
 
+  def exists(itemId: String): Boolean = {
+    val lines = getAll
+    for(line <- lines) {
+      if (line.startsWith(itemId)) {
+        return true
+      }
+    }
+    false
+  }
 
   def replace(itemId : String, itemType: String, newCacheObject : String) : Unit = {
     val path: String = if (itemType == "user") cachePathUsers else cachePathItems
@@ -247,20 +266,7 @@ class CacheFile {
   }
 
 
-  def getAll: Array[String] = {
-    val allObjects = Array(String)
-    val userObjects = getLines("user")
-    val itemObjects = getLines("item")
-    val allObjectsString = userObjects.concat(itemObjects).mkString("", "", "")
-    val allRaw = allObjectsString.split("---\n---")
-    // since we split it by ---\n---, the first element has --- on top and the last element has --- at the bottom
-    val firstClean = allRaw.head.take(3)
-    val lastClean = allRaw.reverse.head.take(3)
-    val middleClean = allRaw.take(1).takeRight(1)
-    allObjects.concat(firstClean)
-    allObjects.concat(middleClean.concat(lastClean))
-    allObjects
-  }
+  def getAll: Array[String] = getLines("user").concat(getLines("item"))
 
   /*
   * CacheObject ==
@@ -282,11 +288,8 @@ class CacheFile {
     if(!cacheFile.exists()) cacheFile.createNewFile()
     val lines = toLines(cacheObject)
     val writer = new FileWriter(cacheFile, true)
-    writer.append("---\n")
-    for (line <- lines) {
-      writer.append(line + '\n')
-    }
-    writer.append("---\n")
+    for (line <- lines) writer.append(line + '\n')
+
     writer.close()
   }
 

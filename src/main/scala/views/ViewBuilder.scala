@@ -16,7 +16,10 @@ object ViewBuilder {
       case "comment" => buildComment(itemObj)
       case "poll" => buildPoll(itemObj)
       case "pollopt" => buildPollOpt(itemObj)
-      case _ => throw new Exception("Item type is not defined.")
+      case _ => {
+        print("Item type is not defined. It is " + itemObj.itemType)
+        buildStory(itemObj)
+      }
     }
   }
 
@@ -31,14 +34,14 @@ object ViewBuilder {
   }
 
   def buildComment(itemObj: ItemObject): String = {
-    var commentString = "Comment by " + bold(itemObj.by) + ":\n"
+    var commentString = "Comment by " + bold(itemObj.by) + " at " + buildTime(itemObj.time) + ":\n"
     commentString += itemObj.text + "\n"
     commentString += bold(itemObj.kids.length.toString) + " comments below\n"
     commentString
   }
 
   def buildPoll(itemObj: ItemObject): String = {
-    var pollString = itemObj.title + " by " + itemObj.by + "\n"
+    var pollString = itemObj.title + " by " + itemObj.by + " at " + buildTime(itemObj.time) + ":\n"
     pollString += "total comment count:" + itemObj.descendants + "\n"
     pollString += "score: " + itemObj.score + "\n"
     pollString += "comments' count: " + itemObj.kids.length + "\n"
@@ -46,7 +49,8 @@ object ViewBuilder {
   }
 
   def buildPollOpt(itemObj: ItemObject): String = {
-    var polloptString = bold(itemObj.score.toString) + " points by " + bold(itemObj.by) + "\n"
+    var polloptString = bold(itemObj.score.toString) + " points by " + bold(itemObj.by)
+    polloptString += " at " + buildTime(itemObj.time) + ":\n"
     polloptString += itemObj.text + "\n"
     polloptString
   }
@@ -54,6 +58,7 @@ object ViewBuilder {
   def buildUser(userObj: UserObject): String = {
     var userString = "name: " + bold(userObj.id) + "\n"
     userString += "created at: " + buildTime(userObj.created) + "\n"
+    userString += "about: " + userObj.about + "\n"
     userString += "karma: " + bold(userObj.karma.toString) + "\n"
     userString += "comments amd stories spawned" +
       ": " + bold(userObj.submitted.length.toString) + "\n"
