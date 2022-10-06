@@ -11,8 +11,8 @@ class CommandFactory {
     var showTime: Int = 10000 // miliseconds to watch
     if (!options.isEmpty){
       for (option <- options) {
-        val optionDef = option.splitAt('=')._1
-        val optionVal = option.splitAt('=')._2
+        val optionDef = option.split('=').head
+        val optionVal = option.split('=').drop(1).head
         optionDef match {
           case "--start" => start = optionVal.toInt
           case "--end" => end = optionVal.toInt

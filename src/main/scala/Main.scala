@@ -9,7 +9,7 @@ object Main {
     // that will be print on the console
     // initiated dev branch
     val receivedArgs = splitCommand(args)
-    var options = receivedArgs._1
+    val options = receivedArgs._1
     val commandOptions = receivedArgs._2.drop(1)
     val commandName = receivedArgs._2.head
     println("command name: " + commandName)
@@ -17,14 +17,18 @@ object Main {
     println("command options: ")
     for (co <- commandOptions) println(co)
     if (options.contains("--help")){
-      if (args.length == 1)
+      if (args.length == 1) {
         print(defaultHelp())
-      else
+        return
+      } else
         View.viewHelp(commandName)
     }
-    if(options.contains("--clearCache")) Cache.clearCache
+    if(options.contains("--clearCache")) {
+      Cache.clearCache
+      return
+    }
     val cf = new CommandFactory
-    cf.create(commandName, options.concat(commandOptions))
+    cf.create(commandName, commandOptions)
 
     // observable tasks and not all of em i have written in the note book:
     // 1. add flags for help so it'll be shown from views. done
