@@ -7,7 +7,12 @@ import cache.{Cache, CacheFile}
 class ApiService extends ApiCalls {
   private val cache = new Cache()
 
+  private var passedTtl: Int = -1
+
+  def setTtl(newTtl: Int): Unit = if (newTtl > 0) passedTtl = newTtl
+
   override def getUser(userId: String): Option[UserObject] = {
+    if (passedTtl != -1) cache.validateCache
     val cachedUser = cache.uploadUser(userId)
     if( cachedUser.created == 0 && !cache.exists(userId)) {
       val userObj = ApiReader.toUser(ApiCalls.getUser(userId))
@@ -21,6 +26,7 @@ class ApiService extends ApiCalls {
 
   override def getItem(itemId: Int): Option[ItemObject] = {
     if(cache.exists(itemId)){
+      if (passedTtl != -1) cache.validateCache
       val cachedItem = cache.uploadItem(itemId)
       Option(cachedItem)
     }

@@ -1,6 +1,5 @@
 import CommandParser.{defaultHelp, splitCommand}
-import api.apicalls.ApiCallsImplementation
-import commands.{ItemCommand, StoriesCommand, UserCommand}
+import cache.Cache
 import views.View
 
 object Main {
@@ -10,7 +9,7 @@ object Main {
     // that will be print on the console
     // initiated dev branch
     val receivedArgs = splitCommand(args)
-    val options = receivedArgs._1
+    var options = receivedArgs._1
     val commandOptions = receivedArgs._2.drop(1)
     val commandName = receivedArgs._2.head
     println("command name: " + commandName)
@@ -23,14 +22,15 @@ object Main {
       else
         View.viewHelp(commandName)
     }
+    if(options.contains("--clearCache")) Cache.clearCache
     val cf = new CommandFactory
-    cf.create(commandName)
+    cf.create(commandName, options.concat(commandOptions))
 
     // observable tasks and not all of em i have written in the note book:
     // 1. add flags for help so it'll be shown from views. done
-    // 2. cache.
+    // 2. cache. done
     // 3. options.
-    // 4. lazy fetching.
+    // 4. lazy fetching. done
     // 5. exceptions.
     // 6. look for redundancies.
     // 7. comments.

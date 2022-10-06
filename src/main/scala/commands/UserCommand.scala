@@ -4,12 +4,10 @@ import api.apicalls.ApiService
 import views.View
 
 object UserCommand extends Command {
-  override def execute(id: Any): Unit = {
+  override def execute(id: Any, options: CommandOptions): Unit = {
     val idStr = id.toString
     val userObj = new ApiService().getUser(idStr)
-    if(userObj.isEmpty){
-      throw new NoSuchElementException("User " + idStr + " doesn't exist")
-    }
+    if(userObj.isEmpty) throw new NoSuchElementException("User " + idStr + " doesn't exist")
     val user = userObj.get
     View.viewUser(user)
   }
