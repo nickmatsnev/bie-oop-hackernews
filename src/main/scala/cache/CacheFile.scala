@@ -17,7 +17,9 @@ class CacheFile {
   private def toLines(text: String): Array[String] = text.split("\n")
 
   // text should be (id,id,id,...,id) ; we take first&last elems from string as they're () and then split and convert
-  private def toIntArray(text: String): Array[Int] = text.dropRight(1).split(",").map(_.toInt)
+  private def toIntArray(text: String): Array[Int] =
+    if (text.dropRight(1) != "") text.dropRight(1).split(",").map(_.toInt)
+    else Array()
 
   private def getFileAsString(path: String): String = {
     val source = Source.fromFile(path)
@@ -124,7 +126,7 @@ class CacheFile {
       lines = lines.drop(1)
     }
     if (lines.head.startsWith("kids")) {
-      val stringKids = lines.head.drop(5)
+      val stringKids = lines.head.drop(12)
       kids = toIntArray(stringKids)
       lines = lines.drop(1)
     }
@@ -137,11 +139,13 @@ class CacheFile {
       lines = lines.drop(1)
     }
     if (lines.head.startsWith("title")) {
+      print(lines.head.drop(6))
       title = lines.head.drop(6)
       lines = lines.drop(1)
     }
     if (lines.head.startsWith("parts")) {
-      val stringParts = lines.head.drop(6)
+      val stringParts = lines.head.drop(13)
+      println(stringParts)
       parts = toIntArray(stringParts)
       lines = lines.drop(1)
     }
@@ -207,9 +211,11 @@ class CacheFile {
 
   def getCacheObject(itemId : String, itemType: String) : String = {
     var cacheObj = itemId + "\n"
-    itemType match {
-      case "user" => getCacheObj(cachePathUsers, 5)
-      case _ => getCacheObj(cachePathItems, 16)
+    if (exists(itemId)){
+      itemType match {
+        case "user" => getCacheObj(cachePathUsers, 5)
+        case _ => getCacheObj(cachePathItems, 15)
+      }
     }
     def getCacheObj(path: String, counterLimit: Int): Unit = {
       val cacheFile = new File(path)

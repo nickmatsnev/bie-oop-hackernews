@@ -2,7 +2,7 @@ package api.apicalls
 
 import api.objects.{ItemObject, UpdatesObject, UserObject}
 import api.reader.ApiReader
-import cache.Cache
+import cache.{Cache, CacheFile}
 
 class ApiService extends ApiCalls {
   private val cache = new Cache()
@@ -20,15 +20,16 @@ class ApiService extends ApiCalls {
   }
 
   override def getItem(itemId: Int): Option[ItemObject] = {
-    val cachedItem = cache.uploadItem(itemId)
-    if (cachedItem.time == 0 && !cache.exists(itemId)) {
+    if(cache.exists(itemId)){
+      val cachedItem = cache.uploadItem(itemId)
+      Option(cachedItem)
+    }
+    else {
       val itemObj = ApiReader.toItem(ApiCalls.getItem(itemId))
       if(itemObj.isEmpty) throw new NoSuchElementException("Item " + itemId + " doesn't exist")
       val item = itemObj.get
       cache.saveItem(item)
       ApiReader.toItem(ApiCalls.getItem(itemId))
-    } else {
-      Option(cachedItem)
     }
   }
 
