@@ -7,14 +7,21 @@ import time.enums.{Month, Weekday}
 import scala.Console.{BOLD, RESET}
 import scala.util.matching.Regex
 
+/**
+ *
+ */
 object ViewBuilder {
 
+  /**
+   * @param text
+   * @return
+   */
   private def fromHTML(text: String): String = {
     val noPTags = text.replaceAll("<p>", "\n")
 
     val iStart:       Regex = "(<i>|<em>|<b>|<strong>)(.*)".r // i have not found italics for scala
     val iEnd:    Regex = "(</i>|</em>|</b>|</strong>)(.*)".r
-
+    /*
     val iStartResult = iStart.findFirstIn(noPTags)
     if (iStartResult.isEmpty) return noPTags
     val iStartCounter: Int = iStartResult.get.toInt
@@ -30,11 +37,21 @@ object ViewBuilder {
     val rightPart = noPTags.splitAt(iEndCounter)._2
 
     leftPart.concat(iPart.concat(rightPart))
+     */
+    noPTags
   }
 
 
+  /**
+   * @param text
+   * @return
+   */
   private def bold(text: String): String = s"$RESET$BOLD$text$RESET"
 
+  /**
+   * @param itemObj
+   * @return
+   */
   def buildItemView(itemObj: ItemObject): String = {
     itemObj.itemType match {
       case "story" => buildStory(itemObj)
@@ -47,8 +64,16 @@ object ViewBuilder {
     }
   }
 
+  /**
+   * @param userObj
+   * @return
+   */
   def buildUserView(userObj: UserObject): String = buildUser(userObj)
 
+  /**
+   * @param itemObj
+   * @return
+   */
   def buildStory(itemObj: ItemObject): String = {
     var storyString = bold(itemObj.title) + " (" + itemObj.url + ")\n"
     storyString += itemObj.score + " points by " + bold(itemObj.by)
@@ -57,6 +82,10 @@ object ViewBuilder {
     storyString
   }
 
+  /**
+   * @param itemObj
+   * @return
+   */
   def buildComment(itemObj: ItemObject): String = {
     var commentString = "Comment by " + bold(itemObj.by) + " at " + buildTime(itemObj.time) + ":\n"
     commentString += fromHTML(itemObj.text) + "\n"
@@ -64,6 +93,10 @@ object ViewBuilder {
     commentString
   }
 
+  /**
+   * @param itemObj
+   * @return
+   */
   def buildPoll(itemObj: ItemObject): String = {
     var pollString = itemObj.title + " by " + itemObj.by + " at " + buildTime(itemObj.time) + ":\n"
     pollString += "total comment count:" + itemObj.descendants + "\n"
@@ -72,6 +105,10 @@ object ViewBuilder {
     pollString
   }
 
+  /**
+   * @param itemObj
+   * @return
+   */
   def buildPollOpt(itemObj: ItemObject): String = {
     var polloptString = bold(itemObj.score.toString) + " points by " + bold(itemObj.by)
     polloptString += " at " + buildTime(itemObj.time) + ":\n"
@@ -79,6 +116,10 @@ object ViewBuilder {
     polloptString
   }
 
+  /**
+   * @param userObj
+   * @return
+   */
   def buildUser(userObj: UserObject): String = {
     var userString = "name: " + bold(userObj.id) + "\n"
     userString += "created at: " + buildTime(userObj.created) + "\n"
@@ -89,6 +130,10 @@ object ViewBuilder {
     userString
   }
 
+  /**
+   * @param weekDay
+   * @return
+   */
   def buildWeekDay(weekDay: Int): String = {
     var weekDayString = ""
     Weekday.values.foreach {
@@ -99,16 +144,28 @@ object ViewBuilder {
     weekDayString
   }
 
+  /**
+   * @param month
+   * @return
+   */
   def buildMonth(month: Int): String = {
     Month.apply(month)
   }
 
+  /**
+   * @param seconds
+   * @return
+   */
   def buildTime(seconds: Long): String = {
     val dateTime = TimeBuilder.getTime(seconds)
     val weekDay = TimeBuilder.getWeekDay(dateTime)
     dateTime.toString + ", " + buildWeekDay(weekDay)
   }
 
+  /**
+   * @param commandType
+   * @return
+   */
   def buildHelp(commandType : String): String ={
     var help = "Help for " + commandType + ":\n"
     // match for diff command

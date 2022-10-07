@@ -1,12 +1,21 @@
+/**
+ *
+ */
 object CommandParser {
 
+  /**
+   * @param passedArgs
+   * @return
+   */
   def splitCommand(passedArgs : Array[String]) : (Array[String], Array[String]) ={
-    // the only -- missing element is a command itself
-    // if there is --help then there can be no further args
     assert(passedArgs.length > 0)
     val commandIndex = passedArgs.indexWhere(arg => !arg.startsWith("--"))
     passedArgs.splitAt(commandIndex)
   }
+
+  /**
+   * @return
+   */
   def defaultHelp(): String ={
     var help = "Welcome to the command line feed of Hacker News!\n"
     help += "Input Format: [options] [command] [command-options]\n"

@@ -3,7 +3,14 @@ package commands
 import api.apicalls.ApiService
 import views.View
 
+/**
+ *
+ */
 object CommentCommand extends Command{
+  /**
+   * @param id
+   * @param options
+   */
   override def execute(id: Any, options: CommandOptions): Unit = {
     val idInt = id.asInstanceOf[Int]
     val itemObj = new ApiService().getItem(idInt)
@@ -16,6 +23,10 @@ object CommentCommand extends Command{
       ItemCommand.execute(commentId, options)
     }
   }
+
+  /**
+   *
+   */
   override def showHelp() : Unit = View.viewHelp("comment")
 
 }

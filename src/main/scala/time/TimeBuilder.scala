@@ -1,6 +1,14 @@
 package time
 
+/**
+ *
+ */
 object TimeBuilder {
+  /**
+   * @param seconds
+   * @param secondsPerUnit
+   * @return
+   */
   protected def timeLoop(seconds : Long, secondsPerUnit : Long) : Int={
     var secondsCountable = seconds
     var units = 0
@@ -10,6 +18,11 @@ object TimeBuilder {
     }
     units
   }
+
+  /**
+   * @param Seconds
+   * @return
+   */
   def getTime(Seconds : Long) : DateTime ={
     val yearInSec = 31556926
     val MonthInSec = 2629743
@@ -37,6 +50,10 @@ object TimeBuilder {
     DateTime(years, months, days, hours, minutes, seconds)
   }
 
+  /**
+   * @param dateTime
+   * @return
+   */
   def getWeekDay(dateTime : DateTime) : Int = {
     ((dateTime.day + (2.6 * dateTime.month - 0.2).floor - 2 * dateTime.getCentury + dateTime.year
     + (dateTime.year / 4).floor + (dateTime.getCentury / 4).floor) % 7).toInt

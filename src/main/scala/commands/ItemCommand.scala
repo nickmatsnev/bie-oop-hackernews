@@ -1,10 +1,16 @@
 package commands
 
 import api.apicalls.ApiService
-import cache.CacheService
 import views.View
 
+/**
+ *
+ */
 object ItemCommand extends Command {
+  /**
+   * @param id
+   * @param options
+   */
   override def execute(id: Any, options: CommandOptions): Unit = {
     val apiService = new ApiService()
     apiService.setTtl(options.ttl, id.toString, "item")
@@ -17,5 +23,8 @@ object ItemCommand extends Command {
     if(options.withComments == 1) CommentCommand.execute(itemObj, options)
   }
 
+  /**
+   *
+   */
   override def showHelp() : Unit = View.viewHelp("item")
 }

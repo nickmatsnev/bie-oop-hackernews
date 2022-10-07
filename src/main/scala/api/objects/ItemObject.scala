@@ -3,6 +3,23 @@ package api.objects
 import upickle.default.{macroRW, ReadWriter => RW}
 import upickle.implicits.key
 
+/**
+ * @param id
+ * @param deleted
+ * @param itemType
+ * @param by
+ * @param time
+ * @param text
+ * @param dead
+ * @param parent
+ * @param poll
+ * @param kids
+ * @param url
+ * @param score
+ * @param title
+ * @param parts
+ * @param descendants
+ */
 //Field	Description
 //id	The item's unique id.
 //deleted	true if the item is deleted.
@@ -36,6 +53,10 @@ case class ItemObject(id : Int,
                       descendants: Int = -1) {
 
 }
+
+/**
+ *
+ */
 object ItemObject{
   implicit val rw: RW[ItemObject] = macroRW
 }

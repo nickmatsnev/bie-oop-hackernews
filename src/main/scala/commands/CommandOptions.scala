@@ -1,5 +1,14 @@
 package commands
 
+/**
+ * @param start
+ * @param end
+ * @param page
+ * @param ttl
+ * @param withComments
+ * @param showSize
+ * @param showTime
+ */
 case class CommandOptions(
                            start: Int = -1,
                            end: Int = -1,

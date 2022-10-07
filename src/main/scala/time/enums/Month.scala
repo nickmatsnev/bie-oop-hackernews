@@ -1,8 +1,14 @@
 package time.enums
 
+/**
+ *
+ */
 object Month {
- def apply(noMonth : Int): String = {
-   // i is an integer
+  /**
+   * @param noMonth
+   * @return
+   */
+  def apply(noMonth : Int): String = {
    noMonth match {
      case 1  => "January"
      case 2  => "February"

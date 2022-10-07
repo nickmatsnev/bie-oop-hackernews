@@ -3,10 +3,22 @@ package commands
 import api.apicalls.ApiService
 import views.View
 
+/**
+ *
+ */
 object StoriesCommand extends Command{
 
+  /**
+   * @param counter
+   * @param size
+   * @param time
+   */
   private def fetching(counter : Int, size : Int, time : Int): Unit = if (counter % size == 0) Thread.sleep(time)
 
+  /**
+   * @param id
+   * @param options
+   */
   override def execute(id : Any, options: CommandOptions) : Unit = {
     val apiService = new ApiService()
     val storyType = id.toString
@@ -64,5 +76,8 @@ object StoriesCommand extends Command{
     }
   }
 
+  /**
+   *
+   */
   override def showHelp() : Unit = View.viewHelp("stories")
 }

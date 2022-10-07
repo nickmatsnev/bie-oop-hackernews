@@ -1,6 +1,13 @@
 import commands.{CommandOptions, StoriesCommand, UserCommand}
 
+/**
+ *
+ */
 class CommandFactory {
+  /**
+   * @param commandName
+   * @param options
+   */
   def create(commandName: String, options : Array[String]): Unit = {
     var start: Int = -1
     var end: Int = -1

@@ -2,6 +2,10 @@ package cache
 import api.objects.{ItemObject, UserObject}
 import java.io.{File, FileWriter}
 import scala.io.Source
+
+/**
+ *
+ */
 /*
 * CacheObject ==
 * ---
@@ -14,13 +18,25 @@ class CacheFile {
   private val cachePathUsers = "src/main/scala/cache/users/users"
 
 
+  /**
+   * @param text
+   * @return
+   */
   private def toLines(text: String): Array[String] = text.split("\n")
 
+  /**
+   * @param text
+   * @return
+   */
   // text should be (id,id,id,...,id) ; we take first&last elems from string as they're () and then split and convert
   private def toIntArray(text: String): Array[Int] =
     if (text.dropRight(1) != "") text.dropRight(1).split(",").map(_.toInt)
     else Array()
 
+  /**
+   * @param path
+   * @return
+   */
   private def getFileAsString(path: String): String = {
     val source = Source.fromFile(path)
     val lines = source.mkString
@@ -28,17 +44,28 @@ class CacheFile {
     lines
   }
 
+  /**
+   * @param itemType
+   * @return
+   */
   private def getLines(itemType: String): Array[String] = {
     val path = if (itemType == "user") cachePathUsers else cachePathItems
     getFileAsString(path).split('\n')
   }
 
+  /**
+   * @param cacheFile
+   */
   private def existException(cacheFile: File): Unit = {
     if(!cacheFile.exists()) {
       throw new Exception("The cache file at " + cacheFile.getAbsolutePath + " or at " + cacheFile.getCanonicalPath + " is not found.")
     }
   }
 
+  /**
+   * @param itemObj
+   * @return
+   */
   def toCacheObject(itemObj : ItemObject): String = {
     var cacheObject = "---\n"
     cacheObject += itemObj.id.toString + "\n"
@@ -59,6 +86,10 @@ class CacheFile {
     cacheObject
   }
 
+  /**
+   * @param userObj
+   * @return
+   */
   def toCacheObject(userObj : UserObject): String = {
     var cacheObject = "---\n"
     cacheObject += userObj.id + "\n"
@@ -69,6 +100,10 @@ class CacheFile {
     cacheObject
   }
 
+  /**
+   * @param cacheObj
+   * @return
+   */
   def toItemObject(cacheObj: String): ItemObject = {
 
     var id : Int = -1
@@ -168,6 +203,10 @@ class CacheFile {
     )
   }
 
+  /**
+   * @param cacheObj
+   * @return
+   */
   def toUserObject(cacheObj: String): UserObject = {
     var id : String = "No name"
     var created : Long = 0
@@ -206,6 +245,11 @@ class CacheFile {
     )
   }
 
+  /**
+   * @param itemId
+   * @param itemType
+   * @return
+   */
   def getCacheObject(itemId : String, itemType: String) : String = {
     var cacheObj = itemId + "\n"
     if (exists(itemId)){
@@ -214,6 +258,11 @@ class CacheFile {
         case _ => getCacheObj(cachePathItems, 15)
       }
     }
+
+    /**
+     * @param path
+     * @param counterLimit
+     */
     def getCacheObj(path: String, counterLimit: Int): Unit = {
       val cacheFile = new File(path)
       existException(cacheFile)

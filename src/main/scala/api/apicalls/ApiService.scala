@@ -6,11 +6,19 @@ import cache.CacheService
 
 import java.util.Calendar
 
+/**
+ *
+ */
 class ApiService extends ApiCalls {
   private val cache = new CacheService()
 
   private var passedTtl: Int = 600
 
+  /**
+   * @param newTtl
+   * @param itemId
+   * @param itemType
+   */
   def setTtl(newTtl: Int, itemId: String, itemType: String): Unit = {
       passedTtl = newTtl
       if (itemType == "user") {
@@ -26,6 +34,10 @@ class ApiService extends ApiCalls {
       }
   }
 
+  /**
+   * @param userId
+   * @return
+   */
   override def getUser(userId: String): Option[UserObject] = {
     if(cache.exists(userId)){
       val cachedUser = cache.uploadUser(userId)
@@ -40,6 +52,10 @@ class ApiService extends ApiCalls {
     }
   }
 
+  /**
+   * @param itemId
+   * @return
+   */
   override def getItem(itemId: Int): Option[ItemObject] = {
     if(cache.exists(itemId)){
       val cachedItem = cache.uploadItem(itemId)
@@ -54,19 +70,43 @@ class ApiService extends ApiCalls {
     }
   }
 
+  /**
+   * @return
+   */
   override def getTopStories: Array[Int] = ApiReader.toStories(ApiCalls.getTopStories)
 
+  /**
+   * @return
+   */
   override def getBestStories: Array[Int] = ApiReader.toStories(ApiCalls.getBestStories)
 
+  /**
+   * @return
+   */
   override def getNewStories: Array[Int] = ApiReader.toStories(ApiCalls.getNewStories)
 
+  /**
+   * @return
+   */
   override def getAskStories: Array[Int] = ApiReader.toStories(ApiCalls.getAskStories)
 
+  /**
+   * @return
+   */
   override def getShowStories: Array[Int] = ApiReader.toStories(ApiCalls.getShowStories)
 
+  /**
+   * @return
+   */
   override def getJobStories: Array[Int] = ApiReader.toStories(ApiCalls.getJobStories)
 
+  /**
+   * @return
+   */
   override def getMaxItem: Option[ItemObject] = ApiReader.toItem(ApiCalls.getMaxItem)
 
+  /**
+   * @return
+   */
   override def getUpdates: UpdatesObject = ApiReader.toUpdates(ApiCalls.getUpdates)
 }

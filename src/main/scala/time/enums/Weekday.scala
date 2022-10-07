@@ -1,5 +1,8 @@
 package time.enums
 
+/**
+ *
+ */
 object Weekday extends Enumeration  {
   type Weekday = Value
   val first = Value("Monday")
