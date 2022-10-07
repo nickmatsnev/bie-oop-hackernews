@@ -5,37 +5,33 @@ import time.TimeBuilder
 import time.enums.{Month, Weekday}
 
 import scala.Console.{BOLD, RESET}
+import scala.util.matching.Regex
 
 object ViewBuilder {
 
-  //def removeZero(s: String) = s.map(c => if(c == '0') ' ' else c)
-
   private def fromHTML(text: String): String = {
-    //<p> - newline. done
     val noPTags = text.replaceAll("<p>", "\n")
-    // <i>/<em> - italics.
-    // go thru text if meet <i> we save all before it as leftPart
-    // then make it cursivePart before we meet </i> and the same with <em>
-    // and each time we add it to new text when we are done with the tag;
-    // i assume the same algorithm proceeds for bold text.
-    var counter = 0
-    var noITags = ""
-    var counterWhereStarts: Array[String] = Array()
-    var counterWhereEnds: Array[String] = Array()
-    var piecesToBeItalic: Array[String] = Array()
-    var foundTag: Boolean = false
-    for(letter <- noPTags){
-      if(letter == '<'){
-        if (noPTags.charAt(counter + 1) == 'i' && noPTags.charAt(counter + 2) == '>'){
 
-        }
-      }
-      noITags += letter
-      counter += 1
-    }
-    // <b>/<strong> - bold.
-    noPTags
+    val iStart:       Regex = "(<i>|<em>|<b>|<strong>)(.*)".r // i have not found italics for scala
+    val iEnd:    Regex = "(</i>|</em>|</b>|</strong>)(.*)".r
+
+    val iStartResult = iStart.findFirstIn(noPTags)
+    if (iStartResult.isEmpty) return noPTags
+    val iStartCounter: Int = iStartResult.get.toInt
+
+    val leftPart = noPTags.splitAt(iStartCounter)._1
+    val iPartAndRightPart = noPTags.splitAt(iStartCounter)._2
+
+    val iEndResult = iEnd.findFirstIn(iPartAndRightPart)
+    if (iEndResult.isEmpty) return noPTags
+    val iEndCounter = iEndResult.get.toInt
+
+    val iPart = bold(noPTags.splitAt(iEndCounter)._1)
+    val rightPart = noPTags.splitAt(iEndCounter)._2
+
+    leftPart.concat(iPart.concat(rightPart))
   }
+
 
   private def bold(text: String): String = s"$RESET$BOLD$text$RESET"
 
@@ -63,7 +59,7 @@ object ViewBuilder {
 
   def buildComment(itemObj: ItemObject): String = {
     var commentString = "Comment by " + bold(itemObj.by) + " at " + buildTime(itemObj.time) + ":\n"
-    commentString += itemObj.text + "\n" // TODO HTML
+    commentString += fromHTML(itemObj.text) + "\n"
     commentString += bold(itemObj.kids.length.toString) + " comments below\n"
     commentString
   }
@@ -79,14 +75,14 @@ object ViewBuilder {
   def buildPollOpt(itemObj: ItemObject): String = {
     var polloptString = bold(itemObj.score.toString) + " points by " + bold(itemObj.by)
     polloptString += " at " + buildTime(itemObj.time) + ":\n"
-    polloptString += itemObj.text + "\n" // TODO HTML
+    polloptString += fromHTML(itemObj.text) + "\n"
     polloptString
   }
 
   def buildUser(userObj: UserObject): String = {
     var userString = "name: " + bold(userObj.id) + "\n"
     userString += "created at: " + buildTime(userObj.created) + "\n"
-    userString += "about: " + userObj.about + "\n" // TODO HTML
+    userString += "about: " + fromHTML(userObj.about) + "\n"
     userString += "karma: " + bold(userObj.karma.toString) + "\n"
     userString += "comments amd stories spawned" +
       ": " + bold(userObj.submitted.length.toString) + "\n"

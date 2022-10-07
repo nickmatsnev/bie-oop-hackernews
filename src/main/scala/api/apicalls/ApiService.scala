@@ -27,15 +27,17 @@ class ApiService extends ApiCalls {
   }
 
   override def getUser(userId: String): Option[UserObject] = {
-    val cachedUser = cache.uploadUser(userId)
-    if( cachedUser.created == 0 && !cache.exists(userId)) {
+    if(cache.exists(userId)){
+      val cachedUser = cache.uploadUser(userId)
+      Option(cachedUser)
+    }
+    else{
       val userObj = ApiReader.toUser(ApiCalls.getUser(userId))
       if(userObj.isEmpty) throw new NoSuchElementException("User " + userId + " doesn't exist")
       val user = userObj.get
       cache.saveUser(user)
       ApiReader.toUser(ApiCalls.getUser(userId))
-    } else
-      Option(cachedUser)
+    }
   }
 
   override def getItem(itemId: Int): Option[ItemObject] = {
