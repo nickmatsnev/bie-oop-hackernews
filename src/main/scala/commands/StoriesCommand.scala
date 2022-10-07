@@ -25,25 +25,27 @@ object StoriesCommand extends Command{
       var counter = 0
       var lazyFetchingCounter: Int = 1
       for(sId <- storiesIds){
-        // start <= x <= end
-        if(options.start > 0 && options.end >= options.start && options.page < 0){
-          if (counter >= options.start && counter <= options.end) {
-            fetching(lazyFetchingCounter, options.showSize, options.showTime)
-            ItemCommand.execute(sId, options)
-            lazyFetchingCounter += 1
+        if (options.end < storiesIds.length){
+          // start <= x <= end
+          if(options.start > 0 && options.end >= options.start && options.page < 0){
+            if (counter >= options.start && counter <= options.end) {
+              fetching(lazyFetchingCounter, options.showSize, options.showTime)
+              ItemCommand.execute(sId, options)
+              lazyFetchingCounter += 1
+            }
+          }
+          // end > 0
+          if(options.start < 0 && options.end > 0 && options.page < 0){
+            if (counter <= options.end){
+              fetching(lazyFetchingCounter, options.showSize, options.showTime)
+              ItemCommand.execute(sId, options)
+              lazyFetchingCounter += 1
+            }
           }
         }
         // start > 0
         if(options.start > 0 && options.end < 0 && options.page < 0){
           if (counter >= options.start){
-            fetching(lazyFetchingCounter, options.showSize, options.showTime)
-            ItemCommand.execute(sId, options)
-            lazyFetchingCounter += 1
-          }
-        }
-        // end > 0
-        if(options.start < 0 && options.end > 0 && options.page < 0){
-          if (counter <= options.end){
             fetching(lazyFetchingCounter, options.showSize, options.showTime)
             ItemCommand.execute(sId, options)
             lazyFetchingCounter += 1

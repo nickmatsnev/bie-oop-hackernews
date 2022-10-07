@@ -4,15 +4,29 @@ import api.objects.{ItemObject, UpdatesObject, UserObject}
 import api.reader.ApiReader
 import cache.{Cache, CacheFile}
 
+import java.util.Calendar
+
 class ApiService extends ApiCalls {
   private val cache = new Cache()
 
-  private var passedTtl: Int = -1
+  private var passedTtl: Int = 600
 
-  def setTtl(newTtl: Int): Unit = if (newTtl > 0) passedTtl = newTtl
+  def setTtl(newTtl: Int, itemId: String, itemType: String): Unit = {
+      passedTtl = newTtl
+      if (itemType == "user") {
+        val optObj = ApiReader.toUser(ApiCalls.getUser(itemId))
+        if (optObj.isEmpty) throw new NoSuchElementException("TTL set up failed because of this user: " + itemId)
+        val item = optObj.get
+        if (item.created > (Calendar.getInstance().getTime.getTime - passedTtl * 1000)) cache.validateCache()
+      } else {
+        val optObj = ApiReader.toItem(ApiCalls.getItem(itemId.toInt))
+        if (optObj.isEmpty) throw new NoSuchElementException("TTL set up failed because of this item: " + itemId)
+        val item = optObj.get
+        if (item.time > (Calendar.getInstance().getTime.getTime - passedTtl * 1000)) cache.validateCache()
+      }
+  }
 
   override def getUser(userId: String): Option[UserObject] = {
-    if (passedTtl != -1) cache.validateCache
     val cachedUser = cache.uploadUser(userId)
     if( cachedUser.created == 0 && !cache.exists(userId)) {
       val userObj = ApiReader.toUser(ApiCalls.getUser(userId))
@@ -26,7 +40,6 @@ class ApiService extends ApiCalls {
 
   override def getItem(itemId: Int): Option[ItemObject] = {
     if(cache.exists(itemId)){
-      if (passedTtl != -1) cache.validateCache
       val cachedItem = cache.uploadItem(itemId)
       Option(cachedItem)
     }

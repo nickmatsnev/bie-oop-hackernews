@@ -25,7 +25,7 @@ class CommandFactory {
         }
       }
     }
-    val cOptions = CommandOptions(start, end, page, ttl, withComments, showSize, showTime)
+    val cOptions = CommandOptions(start, end, page, ttl, withComments, showSize + 1, showTime * 1000)
 
     commandName match {
       case "newstories" | "beststories" | "showstories" | "askstories" | "jobstories" | "topstories" =>

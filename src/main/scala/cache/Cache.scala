@@ -9,9 +9,9 @@ class Cache {
 
   def setTtl(newTtl: Int) : Unit = ttl = newTtl
 
-  def exists(userId: String) = CacheFile.exists(userId)
+  def exists(userId: String): Boolean = CacheFile.exists(userId)
 
-  def exists(itemId: Int) = CacheFile.exists(itemId.toString)
+  def exists(itemId: Int): Boolean = CacheFile.exists(itemId.toString)
 
   def saveUser(userObj : UserObject): Unit = CacheFile.add(CacheFile.toCacheObject(userObj), "user")
 
@@ -24,9 +24,9 @@ class Cache {
 
   def uploadItem(id : Int): ItemObject = CacheFile.toItemObject(CacheFile.getCacheObject(id.toString, "item"))
 
-  def clearCache = CacheFile.clearCache
+  def clearCache(): Unit = CacheFile.clearCache()
 
-  def validateCache: Unit = {
+  def validateCache(): Unit = {
     val apiService = new ApiService()
     val updates = apiService.getUpdates
     // get updates for users
@@ -46,12 +46,12 @@ class Cache {
     }
     for(userId <- updates.profiles){
       val userObj = apiService.getUser(userId)
-      if(userObj.isEmpty) throw new NoSuchElementException("User " + userId.toString + " doesn't exist")
+      if(userObj.isEmpty) throw new NoSuchElementException("User " + userId + " doesn't exist")
       val user = userObj.get
       val updatedUser = CacheFile.toCacheObject(user)
       for (cachedUser <- cachedObjects){
         if(cachedUser.split("\n").take(1).head == user.id)
-          CacheFile.replace(user.id, "user", cachedUser)
+          CacheFile.replace(user.id, "user", updatedUser)
       }
     }
   }
@@ -68,7 +68,7 @@ object Cache extends Cache {
 
   override def uploadItem(id: Int): ItemObject = super.uploadItem(id)
 
-  override def clearCache: Unit = super.clearCache
+  override def clearCache(): Unit = super.clearCache()
 
-  override def validateCache: Unit = super.validateCache
+  override def validateCache(): Unit = super.validateCache()
 }

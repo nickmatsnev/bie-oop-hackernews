@@ -16,15 +16,15 @@ object Main {
     // i have to put it somewhere else
     println("command options: ")
     for (co <- commandOptions) println(co)
-    if (options.contains("--help")){
+    if (options.contains("--help") || commandName == "--help"){
       if (args.length == 1) {
         print(defaultHelp())
         return
       } else
         View.viewHelp(commandName)
     }
-    if(options.contains("--clearCache")) {
-      Cache.clearCache
+    if(options.contains("--clearCache") || commandName == "--clearCache") {
+      Cache.clearCache()
       return
     }
     val cf = new CommandFactory
@@ -33,7 +33,7 @@ object Main {
     // observable tasks and not all of em i have written in the note book:
     // 1. add flags for help so it'll be shown from views. done
     // 2. cache. done
-    // 3. options.
+    // 3. options. done
     // 4. lazy fetching. done
     // 5. exceptions.
     // 6. look for redundancies.

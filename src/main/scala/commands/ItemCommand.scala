@@ -7,7 +7,7 @@ import views.View
 object ItemCommand extends Command {
   override def execute(id: Any, options: CommandOptions): Unit = {
     val apiService = new ApiService()
-    apiService.setTtl(options.ttl)
+    apiService.setTtl(options.ttl, id.toString, "item")
 
     val idInt = id.asInstanceOf[Int]
     val itemObj = apiService.getItem(idInt)

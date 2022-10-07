@@ -35,8 +35,7 @@ class CacheFile {
 
   private def existException(cacheFile: File): Unit = {
     if(!cacheFile.exists()) {
-      throw new Exception("suka " + cacheFile.getAbsolutePath + " pidor " + cacheFile.getCanonicalPath)
-      cacheFile.createNewFile()
+      throw new Exception("The cache file at " + cacheFile.getAbsolutePath + " or at " + cacheFile.getCanonicalPath + " is not found.")
     }
   }
 
@@ -139,13 +138,11 @@ class CacheFile {
       lines = lines.drop(1)
     }
     if (lines.head.startsWith("title")) {
-      print(lines.head.drop(6))
       title = lines.head.drop(6)
       lines = lines.drop(1)
     }
     if (lines.head.startsWith("parts")) {
       val stringParts = lines.head.drop(13)
-      println(stringParts)
       parts = toIntArray(stringParts)
       lines = lines.drop(1)
     }
@@ -233,7 +230,7 @@ class CacheFile {
           }
         }
       }
-      gettingLines
+      gettingLines()
     }
     cacheObj
   }
@@ -299,13 +296,13 @@ class CacheFile {
     writer.close()
   }
 
-  def clearCache : Unit = {
+  def clearCache() : Unit = {
     val writerItems = new FileWriter(cachePathItems)
     val writerUsers = new FileWriter(cachePathUsers)
     writerItems.append("")
     writerUsers.append("")
-    writerItems.close
-    writerUsers.close
+    writerItems.close()
+    writerUsers.close()
   }
 }
 
@@ -329,5 +326,5 @@ object CacheFile extends CacheFile {
 
   override def write(path: String, cacheObject: String): Unit = super.write(path, cacheObject)
 
-  override def clearCache: Unit = super.clearCache
+  override def clearCache(): Unit = super.clearCache()
 }

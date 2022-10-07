@@ -16,10 +16,9 @@ object ViewBuilder {
       case "comment" => buildComment(itemObj)
       case "poll" => buildPoll(itemObj)
       case "pollopt" => buildPollOpt(itemObj)
-      case _ => {
+      case _ =>
         print("Item type is not defined. It is " + itemObj.itemType)
         buildStory(itemObj)
-      }
     }
   }
 
@@ -93,7 +92,10 @@ object ViewBuilder {
       case "item" => help += "Item is called and therefore it prints basic info about unitary item.\n"
       case "user" => help += "Shows user's info:\nname;\ndate of creation;\ncarma;\nposted stuff in a human quantity.\n"
       case "newstories" | "beststories" | "showstories" | "askstories" | "jobstories" | "topstories" =>
-        help += "Summons list of best, new, top, job, ask or show stories.\n"
+          help += "Summons list of best, new, top, job, ask or show stories.\n"
+          help += "Command Options:\n1. --page=[value] opens the specific page of stories\n2. --showSize=[value] allows limit" +
+          "ed to [value] number of rows\n3. --showTime=[valueInSeconds] shows the time each page of items will be static.\n4. --start=[k]&--end==[n] where k <= n and k is the first page and n is the last" +
+          " page of selected topic.\n"
       case _ => help = "This command type is unknown for me.\n"
     }
     help += "End of the helping section.\n\n"

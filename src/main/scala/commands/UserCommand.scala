@@ -5,7 +5,9 @@ import views.View
 
 object UserCommand extends Command {
   override def execute(id: Any, options: CommandOptions): Unit = {
+    val apiService = new ApiService()
     val idStr = id.toString
+    apiService.setTtl(options.ttl, idStr, "user")
     val userObj = new ApiService().getUser(idStr)
     if(userObj.isEmpty) throw new NoSuchElementException("User " + idStr + " doesn't exist")
     val user = userObj.get
