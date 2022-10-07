@@ -235,6 +235,10 @@ class CacheFile {
     cacheObj
   }
 
+  /**
+   * @param itemId
+   * @return
+   */
   def exists(itemId: String): Boolean = {
     val lines = getAll
     for(line <- lines) {
@@ -245,6 +249,11 @@ class CacheFile {
     false
   }
 
+  /**
+   * @param itemId
+   * @param itemType
+   * @param newCacheObject
+   */
   def replace(itemId : String, itemType: String, newCacheObject : String) : Unit = {
     val path: String = if (itemType == "user") cachePathUsers else cachePathItems
     val counterLimit: Int = if(itemType == "user") 4 else 15
@@ -269,15 +278,22 @@ class CacheFile {
   }
 
 
+  /**
+   * @return
+   */
   def getAll: Array[String] = getLines("user").concat(getLines("item"))
 
+  /**
+   * @param cacheObject
+   * @param typeOfObj
+   */
   /*
-  * CacheObject ==
-  * ---
-  * id
-  * the rest
-  * ---
-  * */
+    * CacheObject ==
+    * ---
+    * id
+    * the rest
+    * ---
+    * */
   def add(cacheObject : String, typeOfObj : String) : Unit =
     {
       typeOfObj match {
@@ -286,6 +302,10 @@ class CacheFile {
       }
     }
 
+  /**
+   * @param path
+   * @param cacheObject
+   */
   def write(path : String, cacheObject : String): Unit = {
     val cacheFile = new File(path)
     if(!cacheFile.exists()) cacheFile.createNewFile()
@@ -296,6 +316,9 @@ class CacheFile {
     writer.close()
   }
 
+  /**
+   *
+   */
   def clearCache() : Unit = {
     val writerItems = new FileWriter(cachePathItems)
     val writerUsers = new FileWriter(cachePathUsers)
@@ -306,25 +329,68 @@ class CacheFile {
   }
 }
 
+/**
+ *
+ */
 object CacheFile extends CacheFile {
 
+  /**
+   * @param itemObj
+   * @return
+   */
   override def toCacheObject(itemObj: ItemObject): String = super.toCacheObject(itemObj)
 
+  /**
+   * @param userObj
+   * @return
+   */
   override def toCacheObject(userObj: UserObject): String = super.toCacheObject(userObj)
 
+  /**
+   * @param cacheObj
+   * @return
+   */
   override def toItemObject(cacheObj: String): ItemObject = super.toItemObject(cacheObj)
 
+  /**
+   * @param cacheObj
+   * @return
+   */
   override def toUserObject(cacheObj: String): UserObject = super.toUserObject(cacheObj)
 
+  /**
+   * @param itemId
+   * @param itemType
+   * @return
+   */
   override def getCacheObject(itemId: String, itemType: String): String = super.getCacheObject(itemId, itemType)
 
+  /**
+   * @param itemId
+   * @param itemType
+   * @param newCacheObject
+   */
   override def replace(itemId: String, itemType: String, newCacheObject: String): Unit = super.replace(itemId, itemType, newCacheObject)
 
+  /**
+   * @return
+   */
   override def getAll: Array[String] = super.getAll
 
+  /**
+   * @param cacheObject
+   * @param typeOfObj
+   */
   override def add(cacheObject: String, typeOfObj: String): Unit = super.add(cacheObject, typeOfObj)
 
+  /**
+   * @param path
+   * @param cacheObject
+   */
   override def write(path: String, cacheObject: String): Unit = super.write(path, cacheObject)
 
+  /**
+   *
+   */
   override def clearCache(): Unit = super.clearCache()
 }

@@ -1,7 +1,7 @@
 package commands
 
 import api.apicalls.ApiService
-import cache.Cache
+import cache.CacheService
 import views.View
 
 object ItemCommand extends Command {

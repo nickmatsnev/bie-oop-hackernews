@@ -4,7 +4,7 @@ import api.objects.{ItemObject, UserObject}
 import cache.CacheFile
 import api.apicalls.ApiService
 
-class Cache {
+class CacheService {
   private var ttl = 600
 
   def setTtl(newTtl: Int) : Unit = ttl = newTtl
@@ -57,7 +57,7 @@ class Cache {
   }
 }
 
-object Cache extends Cache {
+object CacheService extends CacheService {
   override def setTtl(newTtl: Int): Unit = super.setTtl(newTtl)
 
   override def saveUser(userObj: UserObject): Unit = super.saveUser(userObj)

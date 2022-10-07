@@ -8,6 +8,35 @@ import scala.Console.{BOLD, RESET}
 
 object ViewBuilder {
 
+  //def removeZero(s: String) = s.map(c => if(c == '0') ' ' else c)
+
+  private def fromHTML(text: String): String = {
+    //<p> - newline. done
+    val noPTags = text.replaceAll("<p>", "\n")
+    // <i>/<em> - italics.
+    // go thru text if meet <i> we save all before it as leftPart
+    // then make it cursivePart before we meet </i> and the same with <em>
+    // and each time we add it to new text when we are done with the tag;
+    // i assume the same algorithm proceeds for bold text.
+    var counter = 0
+    var noITags = ""
+    var counterWhereStarts: Array[String] = Array()
+    var counterWhereEnds: Array[String] = Array()
+    var piecesToBeItalic: Array[String] = Array()
+    var foundTag: Boolean = false
+    for(letter <- noPTags){
+      if(letter == '<'){
+        if (noPTags.charAt(counter + 1) == 'i' && noPTags.charAt(counter + 2) == '>'){
+
+        }
+      }
+      noITags += letter
+      counter += 1
+    }
+    // <b>/<strong> - bold.
+    noPTags
+  }
+
   private def bold(text: String): String = s"$RESET$BOLD$text$RESET"
 
   def buildItemView(itemObj: ItemObject): String = {
@@ -34,7 +63,7 @@ object ViewBuilder {
 
   def buildComment(itemObj: ItemObject): String = {
     var commentString = "Comment by " + bold(itemObj.by) + " at " + buildTime(itemObj.time) + ":\n"
-    commentString += itemObj.text + "\n"
+    commentString += itemObj.text + "\n" // TODO HTML
     commentString += bold(itemObj.kids.length.toString) + " comments below\n"
     commentString
   }
@@ -50,14 +79,14 @@ object ViewBuilder {
   def buildPollOpt(itemObj: ItemObject): String = {
     var polloptString = bold(itemObj.score.toString) + " points by " + bold(itemObj.by)
     polloptString += " at " + buildTime(itemObj.time) + ":\n"
-    polloptString += itemObj.text + "\n"
+    polloptString += itemObj.text + "\n" // TODO HTML
     polloptString
   }
 
   def buildUser(userObj: UserObject): String = {
     var userString = "name: " + bold(userObj.id) + "\n"
     userString += "created at: " + buildTime(userObj.created) + "\n"
-    userString += "about: " + userObj.about + "\n"
+    userString += "about: " + userObj.about + "\n" // TODO HTML
     userString += "karma: " + bold(userObj.karma.toString) + "\n"
     userString += "comments amd stories spawned" +
       ": " + bold(userObj.submitted.length.toString) + "\n"

@@ -2,12 +2,12 @@ package api.apicalls
 
 import api.objects.{ItemObject, UpdatesObject, UserObject}
 import api.reader.ApiReader
-import cache.{Cache, CacheFile}
+import cache.CacheService
 
 import java.util.Calendar
 
 class ApiService extends ApiCalls {
-  private val cache = new Cache()
+  private val cache = new CacheService()
 
   private var passedTtl: Int = 600
 

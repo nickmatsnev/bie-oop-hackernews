@@ -1,5 +1,5 @@
 import CommandParser.{defaultHelp, splitCommand}
-import cache.Cache
+import cache.CacheService
 import views.View
 
 object Main {
@@ -24,7 +24,7 @@ object Main {
         View.viewHelp(commandName)
     }
     if(options.contains("--clearCache") || commandName == "--clearCache") {
-      Cache.clearCache()
+      CacheService.clearCache()
       return
     }
     val cf = new CommandFactory
