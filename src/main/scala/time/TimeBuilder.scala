@@ -5,9 +5,9 @@ package time
  */
 object TimeBuilder {
   /**
-   * @param seconds
-   * @param secondsPerUnit
-   * @return
+   * @param seconds passed number of seconds
+   * @param secondsPerUnit passed time unit in seconds
+   * @return time in the given measure, used as inner function for getTime
    */
   protected def timeLoop(seconds : Long, secondsPerUnit : Long) : Int={
     var secondsCountable = seconds
@@ -20,8 +20,8 @@ object TimeBuilder {
   }
 
   /**
-   * @param Seconds
-   * @return
+   * @param Seconds - unix/epoch time in seconds
+   * @return time wrapped in DateTime case class
    */
   def getTime(Seconds : Long) : DateTime ={
     val yearInSec = 31556926
@@ -51,8 +51,8 @@ object TimeBuilder {
   }
 
   /**
-   * @param dateTime
-   * @return
+   * @param dateTime - date time object for which the weekday is desired
+   * @return calculates a weekday from Mon to Sun of a given date
    */
   def getWeekDay(dateTime : DateTime) : Int = {
     ((dateTime.day + (2.6 * dateTime.month - 0.2).floor - 2 * dateTime.getCentury + dateTime.year

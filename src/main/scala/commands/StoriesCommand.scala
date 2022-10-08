@@ -4,7 +4,7 @@ import api.apicalls.ApiService
 import views.View
 
 /**
- *
+ * executes story command
  */
 object StoriesCommand extends Command{
 
@@ -77,7 +77,7 @@ object StoriesCommand extends Command{
   }
 
   /**
-   *
+   * shows help
    */
   override def showHelp() : Unit = View.viewHelp("stories")
 }

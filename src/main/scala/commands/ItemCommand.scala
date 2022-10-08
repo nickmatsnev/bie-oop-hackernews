@@ -4,7 +4,7 @@ import api.apicalls.ApiService
 import views.View
 
 /**
- *
+ * executes item command
  */
 object ItemCommand extends Command {
   /**
@@ -13,7 +13,7 @@ object ItemCommand extends Command {
    */
   override def execute(id: Any, options: CommandOptions): Unit = {
     val apiService = new ApiService()
-    apiService.setTtl(options.ttl, id.toString, "item")
+    apiService.setTtlAndValidate(options.ttl, id.toString, "item")
 
     val idInt = id.asInstanceOf[Int]
     val itemObj = apiService.getItem(idInt)
@@ -24,7 +24,7 @@ object ItemCommand extends Command {
   }
 
   /**
-   *
+   * shows help
    */
   override def showHelp() : Unit = View.viewHelp("item")
 }

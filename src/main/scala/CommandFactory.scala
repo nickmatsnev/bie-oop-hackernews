@@ -5,8 +5,8 @@ import commands.{CommandOptions, StoriesCommand, UserCommand}
  */
 class CommandFactory {
   /**
-   * @param commandName
-   * @param options
+   * @param commandName - passed command to execute
+   * @param options - set of options
    */
   def create(commandName: String, options : Array[String]): Unit = {
     var start: Int = -1

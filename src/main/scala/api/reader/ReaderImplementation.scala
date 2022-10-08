@@ -7,10 +7,6 @@ import upickle.default.read
  */
 class ReaderImplementation extends ApiReader
 {
-// pickle will be here
-  // and it should be class too
-  // sealed preferably
-
   /**
    * @param user
    * @return

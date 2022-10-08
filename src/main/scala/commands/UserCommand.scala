@@ -4,7 +4,7 @@ import api.apicalls.ApiService
 import views.View
 
 /**
- *
+ * executes user command
  */
 object UserCommand extends Command {
   /**
@@ -14,7 +14,7 @@ object UserCommand extends Command {
   override def execute(id: Any, options: CommandOptions): Unit = {
     val apiService = new ApiService()
     val idStr = id.toString
-    apiService.setTtl(options.ttl, idStr, "user")
+    apiService.setTtlAndValidate(options.ttl, idStr, "user")
     val userObj = apiService.getUser(idStr)
     if(userObj.isEmpty) throw new NoSuchElementException("User " + idStr + " doesn't exist")
     val user = userObj.get
@@ -22,7 +22,7 @@ object UserCommand extends Command {
   }
 
   /**
-   *
+   * shows help
    */
   override def showHelp() : Unit = View.viewHelp("user")
 }

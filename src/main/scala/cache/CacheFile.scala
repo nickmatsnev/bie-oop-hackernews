@@ -4,7 +4,7 @@ import java.io.{File, FileWriter}
 import scala.io.Source
 
 /**
- *
+ * Class used for operations with cache from the file point of view
  */
 /*
 * CacheObject ==
@@ -20,13 +20,13 @@ class CacheFile {
 
   /**
    * @param text
-   * @return
+   * @return lines of text in array
    */
   private def toLines(text: String): Array[String] = text.split("\n")
 
   /**
    * @param text
-   * @return
+   * @return array of integers from string representation from cache
    */
   // text should be (id,id,id,...,id) ; we take first&last elems from string as they're () and then split and convert
   private def toIntArray(text: String): Array[Int] =
@@ -35,7 +35,7 @@ class CacheFile {
 
   /**
    * @param path
-   * @return
+   * @return content of file in string
    */
   private def getFileAsString(path: String): String = {
     val source = Source.fromFile(path)
@@ -46,7 +46,7 @@ class CacheFile {
 
   /**
    * @param itemType
-   * @return
+   * @return string of user or item cache
    */
   private def getLines(itemType: String): Array[String] = {
     val path = if (itemType == "user") cachePathUsers else cachePathItems
@@ -64,7 +64,7 @@ class CacheFile {
 
   /**
    * @param itemObj
-   * @return
+   * @return string from item
    */
   def toCacheObject(itemObj : ItemObject): String = {
     var cacheObject = "---\n"
@@ -88,7 +88,7 @@ class CacheFile {
 
   /**
    * @param userObj
-   * @return
+   * @return string from user
    */
   def toCacheObject(userObj : UserObject): String = {
     var cacheObject = "---\n"
@@ -102,7 +102,7 @@ class CacheFile {
 
   /**
    * @param cacheObj
-   * @return
+   * @return item from string
    */
   def toItemObject(cacheObj: String): ItemObject = {
 
@@ -205,7 +205,7 @@ class CacheFile {
 
   /**
    * @param cacheObj
-   * @return
+   * @return user from string
    */
   def toUserObject(cacheObj: String): UserObject = {
     var id : String = "No name"
@@ -248,7 +248,7 @@ class CacheFile {
   /**
    * @param itemId
    * @param itemType
-   * @return
+   * @return we look for an object with the given id in the cache of its type
    */
   def getCacheObject(itemId : String, itemType: String) : String = {
     var cacheObj = itemId + "\n"
@@ -262,6 +262,7 @@ class CacheFile {
     /**
      * @param path
      * @param counterLimit
+     * inner function to perform the same functionality for two different types
      */
     def getCacheObj(path: String, counterLimit: Int): Unit = {
       val cacheFile = new File(path)
@@ -269,6 +270,9 @@ class CacheFile {
       val cacheLine = getLines(itemType)
       var found: Boolean = false
       var counter: Int = 0
+      /**
+       * inner function for loop
+       */
       def gettingLines(): Unit ={
         for (line <- cacheLine){
           if (line.startsWith(itemId)) found = true
@@ -286,7 +290,7 @@ class CacheFile {
 
   /**
    * @param itemId
-   * @return
+   * @return true if item exists in cache
    */
   def exists(itemId: String): Boolean = {
     val lines = getAll
@@ -299,9 +303,9 @@ class CacheFile {
   }
 
   /**
-   * @param itemId
-   * @param itemType
-   * @param newCacheObject
+   * @param itemId is id of an item which is to be replaced
+   * @param itemType specifies item type
+   * @param newCacheObject is the data which should be put instead of old data at itemId
    */
   def replace(itemId : String, itemType: String, newCacheObject : String) : Unit = {
     val path: String = if (itemType == "user") cachePathUsers else cachePathItems
@@ -328,20 +332,20 @@ class CacheFile {
 
 
   /**
-   * @return
+   * @return all lines of cache as an array
    */
   def getAll: Array[String] = getLines("user").concat(getLines("item"))
 
   /**
-   * @param cacheObject
-   * @param typeOfObj
+   * adds given cache ovject to the cache
+   * @param cacheObject which will be saved
+   * @param typeOfObj where it has to go
    */
   /*
     * CacheObject ==
     * ---
     * id
     * the rest
-    * ---
     * */
   def add(cacheObject : String, typeOfObj : String) : Unit =
     {
@@ -352,8 +356,8 @@ class CacheFile {
     }
 
   /**
-   * @param path
-   * @param cacheObject
+   * @param path where data should be written
+   * @param cacheObject what data should be written
    */
   def write(path : String, cacheObject : String): Unit = {
     val cacheFile = new File(path)
@@ -366,7 +370,7 @@ class CacheFile {
   }
 
   /**
-   *
+   * clears cache
    */
   def clearCache() : Unit = {
     val writerItems = new FileWriter(cachePathItems)

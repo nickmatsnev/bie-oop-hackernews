@@ -1,7 +1,7 @@
 package time.enums
 
 /**
- *
+ * Enumeration as extension of Enumeration
  */
 object Weekday extends Enumeration  {
   type Weekday = Value

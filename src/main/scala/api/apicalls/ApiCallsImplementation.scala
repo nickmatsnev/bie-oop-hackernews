@@ -9,8 +9,8 @@ class ApiCallsImplementation extends ApiCalls {
   private val ApiUrl = "https://hacker-news.firebaseio.com/v0/"
 
   /**
-   * @param url
-   * @return
+   * @param url where to get json
+   * @return json body
    */
   private def get(url: String): String = {
     val source = Source.fromURL(url)
@@ -22,53 +22,53 @@ class ApiCallsImplementation extends ApiCalls {
 
   /**
    * @param userId
-   * @return
+   * @return user json
    */
   override def getUser(userId: String): String = get(ApiUrl + "user/" + userId + ".json")
 
   /**
    * @param itemId
-   * @return
+   * @return item json
    */
   override def getItem(itemId: Int): String = get(ApiUrl + "item/" + itemId + ".json")
 
   /**
-   * @return
+   * @return top stories ids as json
    */
   override def getTopStories: String = get(ApiUrl + "topstories.json")
 
   /**
-   * @return
+   * @return best stories ids as json
    */
   override def getBestStories: String = get(ApiUrl + "beststories.json")
 
   /**
-   * @return
+   * @return new stories ids as json
    */
   override def getNewStories: String = get(ApiUrl + "newstories.json")
 
   /**
-   * @return
+   * @return ask stories ids as json
    */
   override def getAskStories: String = get(ApiUrl + "askstories.json")
 
   /**
-   * @return
+   * @return show stories ids as json
    */
   override def getShowStories: String = get(ApiUrl + "showstories.json")
 
   /**
-   * @return
+   * @return job stories ids as json
    */
   override def getJobStories: String = get(ApiUrl + "jobstories.json")
 
   /**
-   * @return
+   * @return max item id as json
    */
   override def getMaxItem: String = get(ApiUrl + "maxitem.json")
 
   /**
-   * @return
+   * @return top updated items and profiles ids as json
    */
   override def getUpdates: String = get(ApiUrl + "updates.json")
 }

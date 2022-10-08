@@ -5,54 +5,54 @@ package api.apicalls
  */
 trait ApiCalls {
   /**
-   * @param userId
-   * @return
+   * @param userId id of needed user
+   * @return user by id
    */
   def getUser(userId: String): Any
 
   /**
-   * @param itemId
-   * @return
+   * @param itemId id of needed item
+   * @return item by id
    */
   def getItem(itemId: Int): Any
 
   /**
-   * @return
+   * @return top stories
    */
   def getTopStories: Any
 
   /**
-   * @return
+   * @return best stories
    */
   def getBestStories: Any
 
   /**
-   * @return
+   * @return new stories
    */
   def getNewStories: Any
 
   /**
-   * @return
+   * @return ask stories
    */
   def getAskStories: Any
 
   /**
-   * @return
+   * @return show stories
    */
   def getShowStories: Any
 
   /**
-   * @return
+   * @return job stories
    */
   def getJobStories: Any
 
   /**
-   * @return
+   * @return max item id
    */
   def getMaxItem: Any
 
   /**
-   * @return
+   * @return updates
    */
   def getUpdates: Any
 }
@@ -64,54 +64,54 @@ object ApiCalls extends ApiCalls {
   private val ApiCaller = new ApiCallsImplementation()
 
   /**
-   * @param userId
-   * @return
+   * @param userId of user which would be called from api
+   * @return user as string
    */
   override def getUser(userId: String): String = ApiCaller.getUser(userId)
 
   /**
-   * @param itemId
-   * @return
+   * @param itemId of item which would be called from api
+   * @return item as string
    */
   override def getItem(itemId: Int): String = ApiCaller.getItem(itemId)
 
   /**
-   * @return
+   * @return top stories
    */
   override def getTopStories: String = ApiCaller.getTopStories
 
   /**
-   * @return
+   * @return best stories
    */
   override def getBestStories: String = ApiCaller.getBestStories
 
   /**
-   * @return
+   * @return new stories
    */
   override def getNewStories: String = ApiCaller.getNewStories
 
   /**
-   * @return
+   * @return ask stories
    */
   override def getAskStories: String = ApiCaller.getAskStories
 
   /**
-   * @return
+   * @return show stories
    */
   override def getShowStories: String = ApiCaller.getShowStories
 
   /**
-   * @return
+   * @return job stories
    */
   override def getJobStories: String = ApiCaller.getJobStories
 
   /**
-   * @return
+   * @return max item id
    */
   override def getMaxItem: String = ApiCaller.getMaxItem
 
   /**
-   * @return
+   * @return max item id
    */
   override def getUpdates: String = ApiCaller.getUpdates
 }

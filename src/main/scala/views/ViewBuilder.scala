@@ -5,7 +5,6 @@ import time.TimeBuilder
 import time.enums.{Month, Weekday}
 
 import scala.Console.{BOLD, RESET}
-import scala.util.matching.Regex
 
 /**
  *
@@ -13,8 +12,8 @@ import scala.util.matching.Regex
 object ViewBuilder {
 
   /**
-   * @param text
-   * @return
+   * @param text with html tags or without them
+   * @return text without html tags and the text is shown in accordance with how these tags should've looked on web
    */
   private def fromHTML(text: String): String = {
     val noPTags = text.replaceAll("<p>", "\n")
@@ -44,13 +43,13 @@ object ViewBuilder {
 
   /**
    * @param text
-   * @return
+   * @return bold text
    */
   private def bold(text: String): String = s"$RESET$BOLD$text$RESET"
 
   /**
    * @param itemObj
-   * @return
+   * @return wrapped for presentation item object
    */
   def buildItemView(itemObj: ItemObject): String = {
     itemObj.itemType match {
@@ -66,13 +65,13 @@ object ViewBuilder {
 
   /**
    * @param userObj
-   * @return
+   * @return wrapped for presentation user object
    */
   def buildUserView(userObj: UserObject): String = buildUser(userObj)
 
   /**
    * @param itemObj
-   * @return
+   * @return wrapped story
    */
   def buildStory(itemObj: ItemObject): String = {
     var storyString = bold(itemObj.title) + " (" + itemObj.url + ")\n"
@@ -84,7 +83,7 @@ object ViewBuilder {
 
   /**
    * @param itemObj
-   * @return
+   * @return wrapped comment
    */
   def buildComment(itemObj: ItemObject): String = {
     var commentString = "Comment by " + bold(itemObj.by) + " at " + buildTime(itemObj.time) + ":\n"
@@ -95,7 +94,7 @@ object ViewBuilder {
 
   /**
    * @param itemObj
-   * @return
+   * @return wrapped poll
    */
   def buildPoll(itemObj: ItemObject): String = {
     var pollString = itemObj.title + " by " + itemObj.by + " at " + buildTime(itemObj.time) + ":\n"
@@ -107,7 +106,7 @@ object ViewBuilder {
 
   /**
    * @param itemObj
-   * @return
+   * @return wrapped pollopt
    */
   def buildPollOpt(itemObj: ItemObject): String = {
     var polloptString = bold(itemObj.score.toString) + " points by " + bold(itemObj.by)
@@ -118,7 +117,7 @@ object ViewBuilder {
 
   /**
    * @param userObj
-   * @return
+   * @return  wrapped user
    */
   def buildUser(userObj: UserObject): String = {
     var userString = "name: " + bold(userObj.id) + "\n"
@@ -146,7 +145,7 @@ object ViewBuilder {
 
   /**
    * @param month
-   * @return
+   * @return selected month in String
    */
   def buildMonth(month: Int): String = {
     Month.apply(month)
@@ -154,7 +153,7 @@ object ViewBuilder {
 
   /**
    * @param seconds
-   * @return
+   * @return time nicely wrapped
    */
   def buildTime(seconds: Long): String = {
     val dateTime = TimeBuilder.getTime(seconds)
@@ -164,7 +163,7 @@ object ViewBuilder {
 
   /**
    * @param commandType
-   * @return
+   * @return help for a command
    */
   def buildHelp(commandType : String): String ={
     var help = "Help for " + commandType + ":\n"

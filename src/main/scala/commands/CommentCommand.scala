@@ -4,7 +4,7 @@ import api.apicalls.ApiService
 import views.View
 
 /**
- *
+ * executes comment command
  */
 object CommentCommand extends Command{
   /**
@@ -25,7 +25,7 @@ object CommentCommand extends Command{
   }
 
   /**
-   *
+   * shows help
    */
   override def showHelp() : Unit = View.viewHelp("comment")
 

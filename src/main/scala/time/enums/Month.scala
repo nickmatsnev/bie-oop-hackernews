@@ -1,12 +1,12 @@
 package time.enums
 
 /**
- *
+ * Enumeration as match
  */
 object Month {
   /**
-   * @param noMonth
-   * @return
+   * @param noMonth integer representation of month from 1 to 12
+   * @return string match of month
    */
   def apply(noMonth : Int): String = {
    noMonth match {

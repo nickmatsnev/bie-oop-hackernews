@@ -15,11 +15,11 @@ class ApiService extends ApiCalls {
   private var passedTtl: Int = 600
 
   /**
-   * @param newTtl
-   * @param itemId
-   * @param itemType
+   * @param newTtl new time to live
+   * @param itemId item which was could cause revalidation
+   * @param itemType path to cache
    */
-  def setTtl(newTtl: Int, itemId: String, itemType: String): Unit = {
+  def setTtlAndValidate(newTtl: Int, itemId: String, itemType: String): Unit = {
       passedTtl = newTtl
       if (itemType == "user") {
         val optObj = ApiReader.toUser(ApiCalls.getUser(itemId))
@@ -35,8 +35,8 @@ class ApiService extends ApiCalls {
   }
 
   /**
-   * @param userId
-   * @return
+   * @param userId is string
+   * @return user object by id
    */
   override def getUser(userId: String): Option[UserObject] = {
     if(cache.exists(userId)){
@@ -53,8 +53,8 @@ class ApiService extends ApiCalls {
   }
 
   /**
-   * @param itemId
-   * @return
+   * @param itemId is int
+   * @return item object by id
    */
   override def getItem(itemId: Int): Option[ItemObject] = {
     if(cache.exists(itemId)){
@@ -71,42 +71,42 @@ class ApiService extends ApiCalls {
   }
 
   /**
-   * @return
+   * @return top stories
    */
   override def getTopStories: Array[Int] = ApiReader.toStories(ApiCalls.getTopStories)
 
   /**
-   * @return
+   * @return best stories
    */
   override def getBestStories: Array[Int] = ApiReader.toStories(ApiCalls.getBestStories)
 
   /**
-   * @return
+   * @return new stories
    */
   override def getNewStories: Array[Int] = ApiReader.toStories(ApiCalls.getNewStories)
 
   /**
-   * @return
+   * @return ask stories
    */
   override def getAskStories: Array[Int] = ApiReader.toStories(ApiCalls.getAskStories)
 
   /**
-   * @return
+   * @return show stories
    */
   override def getShowStories: Array[Int] = ApiReader.toStories(ApiCalls.getShowStories)
 
   /**
-   * @return
+   * @return job stories
    */
   override def getJobStories: Array[Int] = ApiReader.toStories(ApiCalls.getJobStories)
 
   /**
-   * @return
+   * @return max item
    */
   override def getMaxItem: Option[ItemObject] = ApiReader.toItem(ApiCalls.getMaxItem)
 
   /**
-   * @return
+   * @return updates
    */
   override def getUpdates: UpdatesObject = ApiReader.toUpdates(ApiCalls.getUpdates)
 }

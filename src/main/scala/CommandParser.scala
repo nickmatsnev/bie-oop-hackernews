@@ -4,8 +4,8 @@
 object CommandParser {
 
   /**
-   * @param passedArgs
-   * @return
+   * @param passedArgs args from the command line when the program was executed
+   * @return two string arrays which are options and command with its options
    */
   def splitCommand(passedArgs : Array[String]) : (Array[String], Array[String]) ={
     assert(passedArgs.length > 0)
@@ -14,7 +14,7 @@ object CommandParser {
   }
 
   /**
-   * @return
+   * @return full guide
    */
   def defaultHelp(): String ={
     var help = "Welcome to the command line feed of Hacker News!\n"

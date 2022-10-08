@@ -5,41 +5,41 @@ import cache.CacheFile
 import api.apicalls.ApiService
 
 /**
- *
+ * used for operations with cache from the business layer
  */
 class CacheService {
   private var ttl = 600
 
   /**
-   * @param newTtl
+   * @param newTtl sets ttl different from the default
    */
   def setTtl(newTtl: Int) : Unit = ttl = newTtl
 
   /**
    * @param userId
-   * @return
+   * @return true if user exists in cache and false if not
    */
   def exists(userId: String): Boolean = CacheFile.exists(userId)
 
   /**
    * @param itemId
-   * @return
+   * @return true if item exists in cache and false if not
    */
   def exists(itemId: Int): Boolean = CacheFile.exists(itemId.toString)
 
   /**
-   * @param userObj
+   * @param userObj is going to be saved to cache
    */
   def saveUser(userObj : UserObject): Unit = CacheFile.add(CacheFile.toCacheObject(userObj), "user")
 
   /**
-   * @param itemObj
+   * @param itemObj is goung to be saved to cache
    */
   def saveItem(itemObj : ItemObject): Unit = CacheFile.add(CacheFile.toCacheObject(itemObj), "item")
 
   /**
    * @param id
-   * @return
+   * @return uploads user from cache
    */
   def uploadUser(id : String): UserObject = {
     val cacheUser = CacheFile.getCacheObject(id, "user")
@@ -48,17 +48,17 @@ class CacheService {
 
   /**
    * @param id
-   * @return
+   * @return uploads item from cache
    */
   def uploadItem(id : Int): ItemObject = CacheFile.toItemObject(CacheFile.getCacheObject(id.toString, "item"))
 
   /**
-   *
+   * clears cache
    */
   def clearCache(): Unit = CacheFile.clearCache()
 
   /**
-   *
+   * validates cache
    */
   def validateCache(): Unit = {
     val apiService = new ApiService()

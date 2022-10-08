@@ -8,7 +8,7 @@ import views.View
 object Main {
 
   /**
-   * @param args
+   * @param args - [--option] [command] [--command-options]
    */
   def main(args: Array[String]): Unit = {
 
