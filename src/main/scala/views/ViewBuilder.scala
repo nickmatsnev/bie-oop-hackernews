@@ -19,26 +19,26 @@ object ViewBuilder {
   private def fromHTML(text: String): String = {
     val noPTags = text.replaceAll("<p>", "\n")
 
-    val iStart:       Regex = "(<i>|<em>|<b>|<strong>)(.*)".r // i have not found italics for scala
-    val iEnd:    Regex = "(</i>|</em>|</b>|</strong>)(.*)".r
-    /*
-    val iStartResult = iStart.findFirstIn(noPTags)
-    if (iStartResult.isEmpty) return noPTags
-    val iStartCounter: Int = iStartResult.get.toInt
+    var iStart: Int = 0
+    var iEnd: Int = 0
+    var counter: Int = 0
 
-    val leftPart = noPTags.splitAt(iStartCounter)._1
-    val iPartAndRightPart = noPTags.splitAt(iStartCounter)._2
-
-    val iEndResult = iEnd.findFirstIn(iPartAndRightPart)
-    if (iEndResult.isEmpty) return noPTags
-    val iEndCounter = iEndResult.get.toInt
-
-    val iPart = bold(noPTags.splitAt(iEndCounter)._1)
-    val rightPart = noPTags.splitAt(iEndCounter)._2
-
-    leftPart.concat(iPart.concat(rightPart))
-     */
-    noPTags
+    for(letter <- noPTags){
+      if((noPTags.charAt(counter) == '<' && noPTags.charAt(counter + 1) == 'i'
+        && noPTags.charAt(counter + 2) == '>')) {
+        iStart = counter
+      }
+      if ((letter == '<' && noPTags.charAt(counter + 1) == '/' && noPTags.charAt(counter + 2) == 'i'
+        && noPTags.charAt(counter + 3) == '>')) {
+        iEnd = counter
+      }
+      counter += 1
+    }
+    val leftPart =  noPTags.splitAt(iStart)._1
+    val iPartRightPart = noPTags.splitAt(iStart)._2.drop(3)
+    val iPart = iPartRightPart.splitAt(iEnd - 6)._1.dropRight(4)
+    val rightPart = iPartRightPart.splitAt(iEnd - 6)._2
+    leftPart.concat(bold(iPart).concat(rightPart))
   }
 
 
