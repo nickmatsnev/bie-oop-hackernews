@@ -1,2 +1,4 @@
 src/main/scala/cache/items/*
 src/main/scala/cache/users/*
+/.idea
+/.bsp
