@@ -21,13 +21,13 @@ class ApiCallsImplementation extends ApiCalls {
   }
 
   /**
-   * @param userId
+   * @param userId id of the user we want to get
    * @return user json
    */
   override def getUser(userId: String): String = get(ApiUrl + "user/" + userId + ".json")
 
   /**
-   * @param itemId
+   * @param itemId id of the item we want to get
    * @return item json
    */
   override def getItem(itemId: Int): String = get(ApiUrl + "item/" + itemId + ".json")

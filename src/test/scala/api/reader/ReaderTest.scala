@@ -1,5 +1,6 @@
 package api.reader
 
+import api.objects.UpdatesObject
 import org.scalatest.funsuite.AnyFunSuite
 
 class ReaderTest extends AnyFunSuite{
@@ -9,6 +10,9 @@ class ReaderTest extends AnyFunSuite{
     assert(ApiReader.toStories(str) sameElements  intArr)
   }
   test("toUpdates"){
-    // TODO
+    val str: String ="{\"items\":[33151294,33154303,33151596],\"profiles\":[\"planede\",\"skrap\"]}"
+    val updatesObject: UpdatesObject = UpdatesObject(items = Array(33151294,33154303,33151596), profiles = Array("planede", "skrap"))
+    assert(ApiReader.toUpdates(str).items sameElements   updatesObject.items)
+    assert(ApiReader.toUpdates(str).profiles sameElements   updatesObject.profiles)
   }
 }
