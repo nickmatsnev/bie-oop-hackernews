@@ -4,7 +4,7 @@ import api.objects.{ItemObject, UserObject}
 import time.TimeBuilder
 import time.enums.{Month, Weekday}
 
-import scala.Console.{BOLD, RESET}
+import scala.Console.{BOLD, RESET, UNDERLINED}
 
 /**
  *
@@ -12,34 +12,71 @@ import scala.Console.{BOLD, RESET}
 object ViewBuilder {
 
   /**
+   * @param text where we look for substring
+   * @param substring which we need to find
+   * @return index of the substring in the text
+   */
+  private def getIndexOfSubString(text:String,substring:String):Int={
+      text.indexOf(substring)
+  }
+
+
+  /**
    * @param text with html tags or without them
    * @return text without html tags and the text is shown in accordance with how these tags should've looked on web
    */
-  private def fromHTML(text: String): String = {
+  def fromHTML(text: String): String = {
     val noPTags = text.replaceAll("<p>", "\n")
 
-    var iStart: Int = 0
-    var iEnd: Int = 0
-    var counter: Int = 0
-
-    for(letter <- noPTags){
-      if((noPTags.charAt(counter) == '<' && noPTags.charAt(counter + 1) == 'i'
-        && noPTags.charAt(counter + 2) == '>')) {
-        iStart = counter
-      }
-      if ((letter == '<' && noPTags.charAt(counter + 1) == '/' && noPTags.charAt(counter + 2) == 'i'
-        && noPTags.charAt(counter + 3) == '>')) {
-        iEnd = counter
-      }
-      counter += 1
+    val iStart: Int = getIndexOfSubString(noPTags, "<i>")
+    var noITags = noPTags
+    if (iStart != -1){
+      val leftPart =  noPTags.splitAt(iStart)._1
+      val iPartRightPart = noPTags.splitAt(iStart)._2.drop(3)
+      val iEnd: Int = getIndexOfSubString(iPartRightPart, "</i>")
+      val iPart = iPartRightPart.splitAt(iEnd)._1
+      val rightPart = iPartRightPart.splitAt(iEnd )._2.drop(4)
+      noITags = leftPart.concat(italic(iPart).concat(rightPart))
     }
-    val leftPart =  noPTags.splitAt(iStart)._1
-    val iPartRightPart = noPTags.splitAt(iStart)._2.drop(3)
-    val iPart = iPartRightPart.splitAt(iEnd - 6)._1.dropRight(4)
-    val rightPart = iPartRightPart.splitAt(iEnd - 6)._2
-    leftPart.concat(bold(iPart).concat(rightPart))
+    val bStart: Int = getIndexOfSubString(noPTags, "<b>")
+    var noBTags = noITags
+    if (bStart != -1){
+      val leftPart =  noITags.splitAt(bStart)._1
+      val bPartRightPart = noITags.splitAt(bStart)._2.drop(3)
+      val bEnd: Int = getIndexOfSubString(bPartRightPart, "</b>")
+      val bPart = bPartRightPart.splitAt(bEnd)._1
+      val rightPart = bPartRightPart.splitAt(bEnd)._2.drop(4)
+      noBTags = leftPart.concat(bold(bPart).concat(rightPart))
+    }
+    val emStart: Int = getIndexOfSubString(noPTags, "<em>")
+    var noEmTags = noBTags
+    if (emStart != -1){
+      val leftPart =  noBTags.splitAt(emStart)._1
+      val emPartRightPart = noBTags.splitAt(emStart)._2.drop(4)
+      val emEnd: Int = getIndexOfSubString(emPartRightPart, "</em>")
+      val emPart = emPartRightPart.splitAt(emEnd)._1
+      val rightPart = emPartRightPart.splitAt(emEnd)._2.drop(5)
+      noEmTags = leftPart.concat(italic(emPart).concat(rightPart))
+    }
+    val sStart: Int = getIndexOfSubString(noPTags, "<strong>")
+    var noSTags = noEmTags
+    if (sStart != -1){
+      val leftPart =  noEmTags.splitAt(sStart)._1
+      val sPartRightPart = noEmTags.splitAt(sStart)._2.drop(8)
+      val sEnd: Int = getIndexOfSubString(sPartRightPart, "</strong>")
+      val sPart = sPartRightPart.splitAt(sEnd)._1
+      val rightPart = sPartRightPart.splitAt(sEnd)._2.drop(9)
+      noSTags = leftPart.concat(bold(sPart).concat(rightPart))
+    }
+    noSTags
   }
 
+
+  /**
+   * @param text
+   * @return italic text
+   */
+  private def italic(text: String): String = s"$RESET$UNDERLINED$text$RESET"
 
   /**
    * @param text

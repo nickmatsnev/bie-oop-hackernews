@@ -16,13 +16,13 @@ class CacheService {
   def setTtl(newTtl: Int) : Unit = ttl = newTtl
 
   /**
-   * @param userId
+   * @param userId is the id of the user who would be checked
    * @return true if user exists in cache and false if not
    */
   def exists(userId: String): Boolean = CacheFile.exists(userId)
 
   /**
-   * @param itemId
+   * @param itemId is the id of the item which would be checked
    * @return true if item exists in cache and false if not
    */
   def exists(itemId: Int): Boolean = CacheFile.exists(itemId.toString)
@@ -33,12 +33,12 @@ class CacheService {
   def saveUser(userObj : UserObject): Unit = CacheFile.add(CacheFile.toCacheObject(userObj), "user")
 
   /**
-   * @param itemObj is goung to be saved to cache
+   * @param itemObj is going to be saved to cache
    */
   def saveItem(itemObj : ItemObject): Unit = CacheFile.add(CacheFile.toCacheObject(itemObj), "item")
 
   /**
-   * @param id
+   * @param id of the needed user
    * @return uploads user from cache
    */
   def uploadUser(id : String): UserObject = {
@@ -47,7 +47,7 @@ class CacheService {
   }
 
   /**
-   * @param id
+   * @param id of the required item
    * @return uploads item from cache
    */
   def uploadItem(id : Int): ItemObject = CacheFile.toItemObject(CacheFile.getCacheObject(id.toString, "item"))

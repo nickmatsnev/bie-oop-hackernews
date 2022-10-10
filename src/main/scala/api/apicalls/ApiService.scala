@@ -23,12 +23,12 @@ class ApiService extends ApiCalls {
       passedTtl = newTtl
       if (itemType == "user") {
         val optObj = ApiReader.toUser(ApiCalls.getUser(itemId))
-        if (optObj.isEmpty) throw new NoSuchElementException("TTL set up failed because of this user: " + itemId)
+        if (optObj.isEmpty) throw new NoSuchElementException("This user or item or command does not exist: " + itemId)
         val item = optObj.get
         if (item.created > (Calendar.getInstance().getTime.getTime - passedTtl * 1000)) cache.validateCache()
       } else {
         val optObj = ApiReader.toItem(ApiCalls.getItem(itemId.toInt))
-        if (optObj.isEmpty) throw new NoSuchElementException("TTL set up failed because of this item: " + itemId)
+        if (optObj.isEmpty) throw new NoSuchElementException("This user or item or command does not exist: " + itemId)
         val item = optObj.get
         if (item.time > (Calendar.getInstance().getTime.getTime - passedTtl * 1000)) cache.validateCache()
       }

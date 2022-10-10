@@ -30,24 +30,45 @@ object TimeBuilder {
     val HourInSec = 3600
     val minInSec = 60
 
-    val years = timeLoop(Seconds, yearInSec)
+    var years = timeLoop(Seconds, yearInSec)
     var newSeconds = Seconds - years * yearInSec
 
-    val months = timeLoop(newSeconds, MonthInSec)
+    var months = timeLoop(newSeconds, MonthInSec)
     newSeconds = newSeconds - months * MonthInSec
 
-    val days = timeLoop(newSeconds, DayInSec)
+    var days = timeLoop(newSeconds, DayInSec)
     newSeconds = newSeconds - days * DayInSec
 
-    val hours = timeLoop(newSeconds, HourInSec)
+    var hours = timeLoop(newSeconds, HourInSec)
     newSeconds = newSeconds - hours * HourInSec
 
-    val minutes = timeLoop(newSeconds, minInSec)
+    var minutes = timeLoop(newSeconds, minInSec)
     newSeconds = newSeconds - minutes * minInSec
 
     val seconds = newSeconds.toInt
 
-    DateTime(years, months, days, hours, minutes, seconds)
+    if (seconds == 60){
+      minutes += 1
+      newSeconds = 0
+      if (minutes == 60){
+        hours += 1
+        minutes = 0
+      }
+      if(hours == 24){
+        days += 1
+        hours = 0
+        if(days == 32){
+          months += 1
+          days = 1
+        }
+        if(months == 12){
+          years += 1
+          months = 0
+        }
+      }
+    }
+
+    DateTime(years, months, days, hours, minutes, newSeconds.toInt)
   }
 
   /**

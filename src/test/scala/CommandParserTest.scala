@@ -18,18 +18,6 @@ class CommandParserTest extends AnyFunSuite
     val userCommand = Array("vlad")
     assert(CommandParser.splitCommand(userCommand)._2 sameElements Array("vlad"))
   }
-  test("Cache commands test"){
-  // TODO
-  }
-  test("Bad requests because of command"){
-    // TODO
-  }
-  test("Bad requests because of command option"){
-    // TODO
-  }
-  test("Bad request because of option"){
-    // TODO
-  }
   test("Basic help test"){
     var help = "Welcome to the command line feed of Hacker News!\n"
     help += "Input Format: [options] [command] [command-options]\n"

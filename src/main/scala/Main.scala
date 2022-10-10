@@ -11,7 +11,6 @@ object Main {
    * @param args - [--option] [command] [--command-options]
    */
   def main(args: Array[String]): Unit = {
-
     val receivedArgs = splitCommand(args)
     val options = receivedArgs._1
     val commandOptions = receivedArgs._2.drop(1)

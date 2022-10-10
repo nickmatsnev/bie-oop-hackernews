@@ -11,7 +11,6 @@ import scala.io.Source
 * ---
 * id
 * rest rest
-* ---
 * */
 class CacheFile {
   private val cachePathItems = "src/main/scala/cache/items/items"
