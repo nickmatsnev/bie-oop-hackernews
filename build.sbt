@@ -8,3 +8,5 @@ lazy val root = (project in file("."))
   )
 libraryDependencies += "com.lihaoyi" %% "upickle" % "2.0.0"
 libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.14" % Test
+
+assemblyJarName in assembly := "HackerNewsClient.jar"
