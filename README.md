@@ -26,7 +26,6 @@ build.sbt       - SBT build file
 hnc             - executable script
 README.md      
 ```
-![UML Class Diagram v.0.1](/uml/hnapi.png "UML Class Diagram v.0.1")
 
 ## Build
 
