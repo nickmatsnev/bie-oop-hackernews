@@ -42,14 +42,33 @@ This command compiles the entire code, runs the tests and produces a jar includi
 Same as building, the project can be run through the IntelliJ Idea; by running the sbt command:
 
 ```
-sbt "run top-stories --page=2"
+sbt "run topstories --page=2"
 ```
 
 or, after building with the `sbt assembly`, by running the prepared executable script:
 
 ```
-./hnc top-stories --page=2
+./hnc topstories --page=2
 ```
+### List of available commands:
+```
+topstories
+beststories
+jobstories
+newstories
+askstories
+showstories
+
+```
+with options:
+```
+ --page=n
+ --start=n
+ --end=n
+ --start=n --end=p
+ --showTime=n --showSize=k
+```
+Show time and size commands can be used together with page range commands.
 
 ## Support
 
