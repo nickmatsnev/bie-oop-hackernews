@@ -2,6 +2,16 @@ import org.scalatest.funsuite.AnyFunSuite
 
 class CommandParserTest extends AnyFunSuite
 {
+  test("topstories command content test"){
+    // TODO
+  }
+  test("beststories with comments command content test"){
+    // TODO
+  }
+  test("user command content test"){
+    // TODO
+  }
+
   test("Usual requests"){
     val goodCommandNoHelp = Array("topstories", "--start=1", "--end=4")
     assert(CommandParser.splitCommand(goodCommandNoHelp)._2 sameElements Array("topstories", "--start=1", "--end=4"))
