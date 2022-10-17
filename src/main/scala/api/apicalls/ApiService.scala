@@ -2,18 +2,16 @@ package api.apicalls
 
 import api.objects.{ItemObject, UpdatesObject, UserObject}
 import api.reader.ApiReader
-import cache.CacheService
+import cache.{CacheService, CacheValidator}
 
 import java.util.Calendar
 
 /**
  *
  */
-class ApiService extends ApiCalls {
-  private val cache = new CacheService()
-
-  private var passedTtl: Int = 600
-
+class ApiService(val cacheService: CacheService) extends ApiCalls {
+  private var passedTtl: Int = 6
+  private val cacheValidator = new CacheValidator(cacheService)
   /**
    * @param newTtl new time to live
    * @param itemId item which was could cause revalidation
@@ -25,12 +23,12 @@ class ApiService extends ApiCalls {
         val optObj = ApiReader.toUser(ApiCalls.getUser(itemId))
         if (optObj.isEmpty) throw new NoSuchElementException("This user or item or command does not exist: " + itemId)
         val item = optObj.get
-        if (item.created > (Calendar.getInstance().getTime.getTime - passedTtl * 1000)) cache.validateCache()
+        if (item.created > (Calendar.getInstance().getTime.getTime - passedTtl * 1000)) cacheValidator.validateCache()
       } else {
         val optObj = ApiReader.toItem(ApiCalls.getItem(itemId.toInt))
         if (optObj.isEmpty) throw new NoSuchElementException("This user or item or command does not exist: " + itemId)
         val item = optObj.get
-        if (item.time > (Calendar.getInstance().getTime.getTime - passedTtl * 1000)) cache.validateCache()
+        if (item.time > (Calendar.getInstance().getTime.getTime - passedTtl * 1000)) cacheValidator.validateCache()
       }
   }
 
@@ -39,15 +37,15 @@ class ApiService extends ApiCalls {
    * @return user object by id
    */
   override def getUser(userId: String): Option[UserObject] = {
-    if(cache.exists(userId)){
-      val cachedUser = cache.uploadUser(userId)
+    if(cacheService.exists(userId)){
+      val cachedUser = cacheService.uploadUser(userId)
       Option(cachedUser)
     }
     else{
       val userObj = ApiReader.toUser(ApiCalls.getUser(userId))
       if(userObj.isEmpty) throw new NoSuchElementException("User " + userId + " doesn't exist")
       val user = userObj.get
-      cache.saveUser(user)
+      cacheService.saveUser(user)
       ApiReader.toUser(ApiCalls.getUser(userId))
     }
   }
@@ -57,15 +55,15 @@ class ApiService extends ApiCalls {
    * @return item object by id
    */
   override def getItem(itemId: Int): Option[ItemObject] = {
-    if(cache.exists(itemId)){
-      val cachedItem = cache.uploadItem(itemId)
+    if(cacheService.exists(itemId)){
+      val cachedItem = cacheService.uploadItem(itemId)
       Option(cachedItem)
     }
     else {
       val itemObj = ApiReader.toItem(ApiCalls.getItem(itemId))
       if(itemObj.isEmpty) throw new NoSuchElementException("Item " + itemId + " doesn't exist")
       val item = itemObj.get
-      cache.saveItem(item)
+      cacheService.saveItem(item)
       ApiReader.toItem(ApiCalls.getItem(itemId))
     }
   }

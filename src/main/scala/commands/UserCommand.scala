@@ -1,18 +1,18 @@
 package commands
 
 import api.apicalls.ApiService
+import cache.CacheService
 import views.View
 
 /**
  * executes user command
  */
-object UserCommand extends Command {
+class UserCommand(val apiService: ApiService) extends Command {
   /**
    * @param id
    * @param options
    */
   override def execute(id: Any, options: CommandOptions): Unit = {
-    val apiService = new ApiService()
     val idStr = id.toString
     apiService.setTtlAndValidate(options.ttl, idStr, "user")
     val userObj = apiService.getUser(idStr)

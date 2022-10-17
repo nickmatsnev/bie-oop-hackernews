@@ -6,21 +6,22 @@ import views.View
 /**
  * executes item command
  */
-object ItemCommand extends Command {
+class ItemCommand(val apiService: ApiService) extends Command {
   /**
    * @param id
    * @param options
    */
   override def execute(id: Any, options: CommandOptions): Unit = {
-    val apiService = new ApiService()
     apiService.setTtlAndValidate(options.ttl, id.toString, "item")
-
     val idInt = id.asInstanceOf[Int]
     val itemObj = apiService.getItem(idInt)
     if(itemObj.isEmpty) throw new NoSuchElementException("Item " + idInt + " doesn't exist")
     val item = itemObj.get
     View.viewItem(item)
-    if(options.withComments == 1) CommentCommand.execute(itemObj, options)
+    if(options.withComments == 1) {
+      val commentCommand = new CommentCommand(apiService)
+      commentCommand.execute(itemObj, options)
+    }
   }
 
   /**

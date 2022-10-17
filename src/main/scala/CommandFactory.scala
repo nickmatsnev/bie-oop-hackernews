@@ -1,3 +1,5 @@
+import api.apicalls.ApiService
+import cache.CacheService
 import commands.{CommandOptions, StoriesCommand, UserCommand}
 
 /**
@@ -33,11 +35,15 @@ class CommandFactory {
       }
     }
     val cOptions = CommandOptions(start, end, page, ttl, withComments, showSize + 1, showTime * 1000)
-
+    val cacheService = new CacheService
+    val apiService = new ApiService(cacheService)
     commandName match {
       case "newstories" | "beststories" | "showstories" | "askstories" | "jobstories" | "topstories" =>
-        StoriesCommand.execute(commandName, cOptions)
-      case _ => UserCommand.execute(commandName, cOptions)
+        val storiesCommand = new StoriesCommand(apiService)
+        storiesCommand.execute(commandName, cOptions)
+      case _ =>
+        val userCommand = new UserCommand(apiService)
+        userCommand.execute(commandName, cOptions)
     }
   }
 }
