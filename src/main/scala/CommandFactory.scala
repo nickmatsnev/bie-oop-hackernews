@@ -1,11 +1,11 @@
 import api.apicalls.ApiService
-import cache.CacheService
+import cache.{CacheFile, CacheService}
 import commands.{CommandOptions, StoriesCommand, UserCommand}
 
 /**
  *
  */
-class CommandFactory {
+class CommandFactory(cacheService: CacheService, apiService: ApiService) {
   /**
    * @param commandName - passed command to execute
    * @param options - set of options
@@ -35,8 +35,6 @@ class CommandFactory {
       }
     }
     val cOptions = CommandOptions(start, end, page, ttl, withComments, showSize + 1, showTime * 1000)
-    val cacheService = new CacheService
-    val apiService = new ApiService(cacheService)
     commandName match {
       case "newstories" | "beststories" | "showstories" | "askstories" | "jobstories" | "topstories" =>
         val storiesCommand = new StoriesCommand(apiService)

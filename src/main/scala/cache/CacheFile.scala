@@ -12,19 +12,17 @@ import scala.io.Source
 * id
 * rest rest
 * */
-class CacheFile {
-  private val cachePathItems = "src/main/scala/cache/items/items"
-  private val cachePathUsers = "src/main/scala/cache/users/users"
+class CacheFile(val cachePathItems: String, val cachePathUsers: String) {
 
 
   /**
-   * @param text
+   * @param text - given text
    * @return lines of text in array
    */
   private def toLines(text: String): Array[String] = text.split("\n")
 
   /**
-   * @param text
+   * @param text - given text
    * @return array of integers from string representation from cache
    */
   // text should be (id,id,id,...,id) ; we take first&last elems from string as they're () and then split and convert
@@ -33,7 +31,7 @@ class CacheFile {
     else Array()
 
   /**
-   * @param path
+   * @param path - given path to file
    * @return content of file in string
    */
   private def getFileAsString(path: String): String = {
@@ -44,7 +42,7 @@ class CacheFile {
   }
 
   /**
-   * @param itemType
+   * @param itemType - given item type
    * @return string of user or item cache
    */
   private def getLines(itemType: String): Array[String] = {
@@ -53,7 +51,7 @@ class CacheFile {
   }
 
   /**
-   * @param cacheFile
+   * @param cacheFile - cache file descriptor
    */
   private def existException(cacheFile: File): Unit = {
     if(!cacheFile.exists()) {
@@ -62,7 +60,7 @@ class CacheFile {
   }
 
   /**
-   * @param itemObj
+   * @param itemObj - passed object
    * @return string from item
    */
   def toCacheObject(itemObj : ItemObject): String = {
@@ -86,7 +84,7 @@ class CacheFile {
   }
 
   /**
-   * @param userObj
+   * @param userObj - passed object
    * @return string from user
    */
   def toCacheObject(userObj : UserObject): String = {
@@ -100,7 +98,7 @@ class CacheFile {
   }
 
   /**
-   * @param cacheObj
+   * @param cacheObj - passed object
    * @return item from string
    */
   def toItemObject(cacheObj: String): ItemObject = {
@@ -203,7 +201,7 @@ class CacheFile {
   }
 
   /**
-   * @param cacheObj
+   * @param cacheObj - passed object
    * @return user from string
    */
   def toUserObject(cacheObj: String): UserObject = {
@@ -245,8 +243,8 @@ class CacheFile {
   }
 
   /**
-   * @param itemId
-   * @param itemType
+   * @param itemId - passed id
+   * @param itemType - passed type
    * @return we look for an object with the given id in the cache of its type
    */
   def getCacheObject(itemId : String, itemType: String) : String = {
@@ -259,8 +257,8 @@ class CacheFile {
     }
 
     /**
-     * @param path
-     * @param counterLimit
+     * @param path - pathh in string
+     * @param counterLimit - till what we count
      * inner function to perform the same functionality for two different types
      */
     def getCacheObj(path: String, counterLimit: Int): Unit = {
@@ -288,7 +286,7 @@ class CacheFile {
   }
 
   /**
-   * @param itemId
+   * @param itemId - passed id of the item
    * @return true if item exists in cache
    */
   def exists(itemId: String): Boolean = {
@@ -384,43 +382,43 @@ class CacheFile {
 /**
  *
  */
-object CacheFile extends CacheFile {
+object CacheFile extends CacheFile(cachePathItems = "src/main/scala/cache/items/items", cachePathUsers = "src/main/scala/cache/users/users") {
 
   /**
-   * @param itemObj
+   * @param itemObj - passed object
    * @return
    */
   override def toCacheObject(itemObj: ItemObject): String = super.toCacheObject(itemObj)
 
   /**
-   * @param userObj
+   * @param userObj - passed object
    * @return
    */
   override def toCacheObject(userObj: UserObject): String = super.toCacheObject(userObj)
 
   /**
-   * @param cacheObj
+   * @param cacheObj - passed object
    * @return
    */
   override def toItemObject(cacheObj: String): ItemObject = super.toItemObject(cacheObj)
 
   /**
-   * @param cacheObj
+   * @param cacheObj - passed object
    * @return
    */
   override def toUserObject(cacheObj: String): UserObject = super.toUserObject(cacheObj)
 
   /**
-   * @param itemId
-   * @param itemType
+   * @param itemId - passed id of the item
+   * @param itemType - passed type of the object
    * @return
    */
   override def getCacheObject(itemId: String, itemType: String): String = super.getCacheObject(itemId, itemType)
 
   /**
-   * @param itemId
-   * @param itemType
-   * @param newCacheObject
+   * @param itemId - passed id
+   * @param itemType - passed type
+   * @param newCacheObject - new replacement
    */
   override def replace(itemId: String, itemType: String, newCacheObject: String): Unit = super.replace(itemId, itemType, newCacheObject)
 
@@ -430,14 +428,14 @@ object CacheFile extends CacheFile {
   override def getAll: Array[String] = super.getAll
 
   /**
-   * @param cacheObject
-   * @param typeOfObj
+   * @param cacheObject - passed object
+   * @param typeOfObj - passed type
    */
   override def add(cacheObject: String, typeOfObj: String): Unit = super.add(cacheObject, typeOfObj)
 
   /**
-   * @param path
-   * @param cacheObject
+   * @param path - passed path in string
+   * @param cacheObject - passed object
    */
   override def write(path: String, cacheObject: String): Unit = super.write(path, cacheObject)
 

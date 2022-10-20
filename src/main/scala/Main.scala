@@ -1,5 +1,6 @@
 import CommandParser.{defaultHelp, splitCommand}
-import cache.CacheService
+import api.apicalls.ApiService
+import cache.{CacheFile, CacheService}
 import views.View
 
 /**
@@ -25,10 +26,12 @@ object Main {
         View.viewHelp(commandName)
     }
     if(options.contains("--clearCache") || commandName == "--clearCache") {
-      CacheService.clearCache()
+      CacheFile.clearCache()
       return
     }
-    val cf = new CommandFactory
+    val cacheService = new CacheService(CacheFile)
+    val apiService = new ApiService(cacheService)
+    val cf = new CommandFactory(cacheService, apiService)
     cf.create(commandName, commandOptions)
   }
 }

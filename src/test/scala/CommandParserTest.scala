@@ -1,15 +1,22 @@
+import api.apicalls.MockApiService
+import api.objects.{ItemObject, UserObject}
+import cache.CacheServiceMock
 import org.scalatest.funsuite.AnyFunSuite
+
+import scala.collection.mutable.ArrayBuffer
 
 class CommandParserTest extends AnyFunSuite
 {
+  private val mockCache = new CacheServiceMock(ArrayBuffer(new ItemObject(2)),ArrayBuffer(new UserObject("test1")))
+  private val mockApi = new MockApiService(mockCache, Array(new UserObject("test2"), new UserObject("vlad")), Array(2), Array(3))
+
+  private val commandFactory = new CommandFactory(mockCache, mockApi)
+
   test("topstories command content test"){
-    // TODO
-  }
-  test("beststories with comments command content test"){
-    // TODO
+    commandFactory.create("topstories", Array())
   }
   test("user command content test"){
-    // TODO
+    commandFactory.create("vlad", Array())
   }
 
   test("Usual requests"){

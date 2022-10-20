@@ -11,7 +11,8 @@ class CacheServiceTest extends AnyFunSuite {
       about = "descriptionAbout",
       submitted = Array(1,2,3,4)
     )
-    val realUser: UserObject = CacheService.uploadUser("test")
+    val cacheService: CacheService = new CacheService(CacheFile)
+    val realUser: UserObject = cacheService.uploadUser("test")
     assert(realUser.id == probeUser.id &&
           realUser.karma == probeUser.karma &&
           realUser.about == probeUser.about &&
@@ -27,7 +28,8 @@ class CacheServiceTest extends AnyFunSuite {
         score = 7122,
         title = "Please give me an A",
         descendants = 49)
-      val realItem: ItemObject = CacheService.uploadItem(101010)
+      val cacheService: CacheService = new CacheService(CacheFile)
+      val realItem: ItemObject = cacheService.uploadItem(101010)
       assert(realItem.id == probeItem.id &&
         realItem.itemType == probeItem.itemType &&
         realItem.by == probeItem.by &&

@@ -20,7 +20,7 @@ import upickle.implicits.key
  * @param parts	A list of related pollopts, in display order.
  * @param descendants	In the case of stories or polls, the total comment count.
  */
-case class ItemObject(id : Int,
+case class ItemObject(id : Int = -1,
                       deleted : Boolean = false,
                       @key("type") itemType : String = "Unknown type",
                       by : String = "Unknown Author",
