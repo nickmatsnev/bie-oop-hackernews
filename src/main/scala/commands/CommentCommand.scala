@@ -9,6 +9,8 @@ import views.View
  */
 class CommentCommand(val apiService: ApiService) extends Command{
   /**
+   * precondition: ID should be integer frankly speaking
+   * post condition: prints comment
    * @param id
    * @param options
    */

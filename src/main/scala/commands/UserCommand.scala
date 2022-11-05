@@ -9,6 +9,8 @@ import views.View
  */
 class UserCommand(val apiService: ApiService) extends Command {
   /**
+   * precondition: ID should be string frankly speaking
+   * post condition: prints user
    * @param id
    * @param options
    */

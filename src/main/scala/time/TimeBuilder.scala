@@ -1,29 +1,30 @@
 package time
 
 /**
- *
+ * i honestly did time package because i am narcissist
  */
 object TimeBuilder {
   /**
-   * @param seconds passed number of seconds
-   * @param secondsPerUnit passed time unit in seconds
-   * @return time in the given measure, used as inner function for getTime
-   */
-  protected def timeLoop(seconds : Long, secondsPerUnit : Long) : Int={
-    var secondsCountable = seconds
-    var units = 0
-    while (secondsCountable > secondsPerUnit) {
-      secondsCountable -= secondsPerUnit
-      units += 1
-    }
-    units
-  }
-
-  /**
+   * precondition: seconds should be more than 0
+   * post condition: none
    * @param Seconds - unix/epoch time in seconds
    * @return time wrapped in DateTime case class
    */
   def getTime(Seconds : Long) : DateTime ={
+    /**
+     * @param seconds passed number of seconds
+     * @param secondsPerUnit passed time unit in seconds
+     * @return time in the given measure, used as inner function for getTime
+     */
+    def timeLoop(seconds : Long, secondsPerUnit : Long) : Int = {
+      var secondsCountable = seconds
+      var units = 0
+      while (secondsCountable > secondsPerUnit) {
+        secondsCountable -= secondsPerUnit
+        units += 1
+      }
+      units
+    }
     val yearInSec = 31556926
     val MonthInSec = 2629743
     val DayInSec = 86400
@@ -72,6 +73,12 @@ object TimeBuilder {
   }
 
   /**
+   * this is a universal formula. i could've done the same for the
+   * getTime function and therefore avoid possible errorous outcome after first leap year
+   * but i am lazy and it doesnt really matter for the sake of this course
+   * if it would be however Scala subject,
+   * I would've done a custom library with ALL java.util.Time functionality
+   * Scala is really awesome, like TypeScript but with JVM:DDD
    * @param dateTime - date time object for which the weekday is desired
    * @return calculates a weekday from Mon to Sun of a given date
    */

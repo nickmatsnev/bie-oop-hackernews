@@ -13,6 +13,8 @@ class ApiService(val cacheService: CacheService) extends ApiCalls {
   private var passedTtl: Int = 6
   private val cacheValidator = new CacheValidator(cacheService)
   /**
+   * precondition: newTTl > 0 & itemID exists, itemType is either user or item
+   * post condition: none
    * @param newTtl new time to live
    * @param itemId item which was could cause revalidation
    * @param itemType path to cache
@@ -33,6 +35,8 @@ class ApiService(val cacheService: CacheService) extends ApiCalls {
   }
 
   /**
+   * precondition: valid userID
+   * post condition: returns null or UserObject
    * @param userId is string
    * @return user object by id
    */
@@ -51,6 +55,8 @@ class ApiService(val cacheService: CacheService) extends ApiCalls {
   }
 
   /**
+   * precondition: valid itemId
+   * post condition: returns null or UserObject
    * @param itemId is int
    * @return item object by id
    */
@@ -69,41 +75,57 @@ class ApiService(val cacheService: CacheService) extends ApiCalls {
   }
 
   /**
+   * precondition: none
+   * post condition: returns list of stories
    * @return top stories
    */
   override def getTopStories: Array[Int] = ApiReader.toStories(ApiCalls.getTopStories)
 
   /**
+   * precondition: none
+   * post condition: returns list of stories
    * @return best stories
    */
   override def getBestStories: Array[Int] = ApiReader.toStories(ApiCalls.getBestStories)
 
   /**
+   * precondition: none
+   * post condition: returns list of stories
    * @return new stories
    */
   override def getNewStories: Array[Int] = ApiReader.toStories(ApiCalls.getNewStories)
 
   /**
+   * precondition: none
+   * post condition: returns list of stories
    * @return ask stories
    */
   override def getAskStories: Array[Int] = ApiReader.toStories(ApiCalls.getAskStories)
 
   /**
+   * precondition: none
+   * post condition: returns list of stories
    * @return show stories
    */
   override def getShowStories: Array[Int] = ApiReader.toStories(ApiCalls.getShowStories)
 
   /**
+   * precondition: none
+   * post condition: returns list of stories
    * @return job stories
    */
   override def getJobStories: Array[Int] = ApiReader.toStories(ApiCalls.getJobStories)
 
   /**
+   * precondition: none
+   * post condition: returns null or UserObject
    * @return max item
    */
   override def getMaxItem: Option[ItemObject] = ApiReader.toItem(ApiCalls.getMaxItem)
 
   /**
+   * precondition: none
+   * post condition: returns two lists wrapped in my object
    * @return updates
    */
   override def getUpdates: UpdatesObject = ApiReader.toUpdates(ApiCalls.getUpdates)

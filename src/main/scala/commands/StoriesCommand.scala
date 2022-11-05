@@ -17,6 +17,8 @@ class StoriesCommand(val apiService: ApiService) extends Command{
   private def fetching(counter : Int, size : Int, time : Int): Unit = if (counter % size == 0) Thread.sleep(time)
 
   /**
+   * precondition: ID should be string frankly speaking
+   * post condition: executes stories
    * @param id
    * @param options
    */

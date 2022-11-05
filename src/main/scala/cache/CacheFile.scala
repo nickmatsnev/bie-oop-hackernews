@@ -16,12 +16,16 @@ class CacheFile(val cachePathItems: String, val cachePathUsers: String) {
 
 
   /**
+   * precondition: none
+   * post condition: returns an array of strings
    * @param text - given text
    * @return lines of text in array
    */
   private def toLines(text: String): Array[String] = text.split("\n")
 
   /**
+   * precondition: string object which represents an array of strings
+   * post condition: returns an array of ints
    * @param text - given text
    * @return array of integers from string representation from cache
    */
@@ -31,6 +35,8 @@ class CacheFile(val cachePathItems: String, val cachePathUsers: String) {
     else Array()
 
   /**
+   * precondition: correct file path
+   * post condition: returns value of file in Scala format
    * @param path - given path to file
    * @return content of file in string
    */
@@ -42,6 +48,8 @@ class CacheFile(val cachePathItems: String, val cachePathUsers: String) {
   }
 
   /**
+   * precondition: correct item type
+   * post condition: returns value of file in Scala list format
    * @param itemType - given item type
    * @return string of user or item cache
    */
@@ -60,6 +68,8 @@ class CacheFile(val cachePathItems: String, val cachePathUsers: String) {
   }
 
   /**
+   * precondition: give an item object
+   * post condition: returns value of an item object in String
    * @param itemObj - passed object
    * @return string from item
    */
@@ -84,6 +94,8 @@ class CacheFile(val cachePathItems: String, val cachePathUsers: String) {
   }
 
   /**
+   * precondition: give an user object
+   * post condition: returns value of an user object in String
    * @param userObj - passed object
    * @return string from user
    */
@@ -98,6 +110,8 @@ class CacheFile(val cachePathItems: String, val cachePathUsers: String) {
   }
 
   /**
+   * precondition: give an String object
+   * post condition: returns value of an String object in item
    * @param cacheObj - passed object
    * @return item from string
    */
@@ -201,6 +215,8 @@ class CacheFile(val cachePathItems: String, val cachePathUsers: String) {
   }
 
   /**
+   * precondition: give an String object
+   * post condition: returns value of an String object in user
    * @param cacheObj - passed object
    * @return user from string
    */
@@ -257,7 +273,9 @@ class CacheFile(val cachePathItems: String, val cachePathUsers: String) {
     }
 
     /**
-     * @param path - pathh in string
+     * precondition: give a correct path and reasonable limit
+     * post condition: returns value of an String object in item
+     * @param path - path in string
      * @param counterLimit - till what we count
      * inner function to perform the same functionality for two different types
      */
@@ -286,6 +304,8 @@ class CacheFile(val cachePathItems: String, val cachePathUsers: String) {
   }
 
   /**
+   * precondition: itemID is valid
+   * post condition: true if item exists in cache, else false
    * @param itemId - passed id of the item
    * @return true if item exists in cache
    */
@@ -300,6 +320,8 @@ class CacheFile(val cachePathItems: String, val cachePathUsers: String) {
   }
 
   /**
+   * precondition: itemID is valid, itemType is user or item, newCacheObject is filled according to the rules
+   * post condition: none
    * @param itemId is id of an item which is to be replaced
    * @param itemType specifies item type
    * @param newCacheObject is the data which should be put instead of old data at itemId

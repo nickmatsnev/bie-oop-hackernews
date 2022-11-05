@@ -8,6 +8,8 @@ import views.View
  */
 class ItemCommand(val apiService: ApiService) extends Command {
   /**
+   * precondition: ID should be integer frankly speaking
+   * post condition: prints item
    * @param id
    * @param options
    */
