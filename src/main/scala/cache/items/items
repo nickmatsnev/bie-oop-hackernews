@@ -1,0 +1,191 @@
+---
+101010
+by testerNick
+deleted false
+itemType story
+time 1665156530
+text No text
+dead false
+parent -1
+poll -1
+kids Array()
+url nick.matsnev
+score 7122
+title Please give me an A
+parts Array()
+descendants 49
+---
+1
+by test1
+deleted false
+itemType story
+time 1665156530
+text No text
+dead false
+parent -1
+poll -1
+kids Array(101,102,103)
+url https://www.noahlebovic.com/aws-doesnt-make-sense-for-scientific-computing/
+score 71
+title AWS doesn't make sense for scientific computing
+parts Array()
+descendants 49
+---
+2
+by test2
+deleted false
+itemType story
+time 1665156530
+text No text
+dead false
+parent -1
+poll -1
+kids Array()
+url nick.matsnev
+score 7122
+title Please give me an A
+parts Array()
+descendants 49
+---
+3
+by test3
+deleted false
+itemType story
+time 1665156530
+text No text
+dead false
+parent -1
+poll -1
+kids Array()
+url nick.matsnev
+score 7122
+title Please <p> <b>give</b> <p> me an A
+parts Array()
+descendants 49
+---
+4
+by test3
+deleted false
+itemType story
+time 1665156530
+text No text
+dead false
+parent -1
+poll -1
+kids Array()
+url nick.matsnev
+score 7121
+title Please give me an A+
+parts Array()
+descendants 49---
+33274885
+by prostoalex
+deleted false
+itemType story
+time 1666274859
+text No text
+dead false
+parent -1
+poll -1
+kids Array(33275020,33275255,33275024,33274999,33275440,33275031,33275411,33275312,33275025,33275465,33275430,33274964,33275426,33275072,33275412,33275037,33275326,33275464,33275103,33275059,33275094,33275439,33275117,33275071,33275253,33275045,33275267,33275017,33275257,33274978,33275143,33274983,33275283,33275476,33274908,33275055,33275054)
+url https://news.yahoo.com/flushing-money-san-francisco-spend-154446848.html
+score 111
+title San Francisco to Spend $1.7M to Build a Single Public Toilet
+parts Array()
+descendants 118
+---
+33274679
+by ptidhomme
+deleted false
+itemType story
+time 1666273871
+text No text
+dead false
+parent -1
+poll -1
+kids Array(33275443,33275050,33275105,33275142,33275144)
+url https://www.openbsd.org/72.html
+score 40
+title OpenBSD 7.2
+parts Array()
+descendants 8
+---
+33274186
+by donutshop
+deleted false
+itemType story
+time 1666271628
+text No text
+dead false
+parent -1
+poll -1
+kids Array(33275456,33275442,33275341,33275353,33274826,33275324,33275256,33274971,33274955)
+url https://stackoverflow.blog/2022/10/20/introducing-the-overflow-offline-project/
+score 47
+title The Overflow Offline Project – Stack Overflow Blog
+parts Array()
+descendants 10
+---
+33274744
+by __warlord__
+deleted false
+itemType story
+time 1666274153
+text No text
+dead false
+parent -1
+poll -1
+kids Array(33275474,33275310,33275409,33275247,33275272,33275258,33274764)
+url https://memooo.ooo/posts/is-openstack-losing/
+score 16
+title Is OpenStack fighting a lost battle?
+parts Array()
+descendants 9
+---
+33273171
+by tosh
+deleted false
+itemType story
+time 1666265967
+text No text
+dead false
+parent -1
+poll -1
+kids Array(33273323,33275281,33273607,33274459,33274660,33273371,33274395,33273601,33274077,33274405,33273839,33275221,33273326,33275182,33274965,33274801,33274904,33273464,33275192,33274644,33274510,33274526,33274333,33274127,33273523,33273508,33274284,33274818,33274180,33274374,33274899,33274285,33274689,33273411,33273569,33273608,33274413,33274418,33274527,33274549,33274132,33275403)
+url https://twitter.com/benthompson/status/1583059222555930629
+score 271
+title Your account is permanently suspended
+parts Array()
+descendants 177
+---
+33274402
+by pantalaimon
+deleted false
+itemType story
+time 1666272534
+text No text
+dead false
+parent -1
+poll -1
+kids Array()
+url https://chipsandcheese.com/2022/10/20/microbenchmarking-intels-arc-a770/
+score 14
+title Microbenchmarking Intel’s Arc A770
+parts Array()
+descendants 0
+---
+33274031
+by shelfchair
+deleted false
+itemType story
+time 1666270907
+text No text
+dead false
+parent -1
+poll -1
+kids Array(33274822,33274615,33274813)
+url https://worldofmatthew.com/technology/mullvad-m247/
+score 27
+title The M247/DataPacket Problem with Mullvad VPN
+parts Array()
+descendants 10
